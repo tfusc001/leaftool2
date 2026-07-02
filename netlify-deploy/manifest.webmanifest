@@ -1,0 +1,19 @@
+{
+  "name": "LeafFilter Norfolk Price Proposal Planner",
+  "short_name": "LF Planner",
+  "description": "Offline-capable LeafFilter field pricing and proposal planner.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#F2F6F4",
+  "theme_color": "#082A24",
+  "icons": [
+    {
+      "src": "leaf-filter-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
