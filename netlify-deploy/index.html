@@ -1542,6 +1542,74 @@
 .toast.error{border-left-color:#F97066}
 .toast.show{opacity:1;transform:translateY(0)}
 @media print{#toastHost{display:none!important}}
+
+/* v62 iPhone / small-phone layer: additive only — layouts above 640px are untouched. */
+@media(max-width:640px){
+  .topbar{position:static;padding:10px max(12px,env(safe-area-inset-right)) 10px max(12px,env(safe-area-inset-left))}
+  .topbar-inner{flex-direction:column;align-items:center;gap:10px}
+  .brand{flex-direction:column;gap:6px;text-align:center}
+  .logo-panel{height:38px;min-width:0;width:180px}
+  .brand-copy h1{font-size:13px;letter-spacing:.06em}
+  .brand-copy .sub{display:none}
+  .top-actions{justify-content:center;gap:7px;width:100%}
+  .top-actions .btn{padding:9px 13px;font-size:12px}
+  .field-app-status{min-height:36px;padding:6px 10px}
+  .install-help{display:none}
+  .presentation .topbar{position:static}
+  .presentation .mode-shell{position:static;top:auto}
+  .presentation .stage{min-height:0}
+  .wrap{padding:10px 10px calc(12px + env(safe-area-inset-bottom))}
+  .grid,.stage,#mainView,.panel,.setup{min-width:0}
+  .stage>*{min-width:0}
+  .project-investment-screen{padding:15px;min-height:0}
+  .project-focus-selector{flex-wrap:wrap;padding:8px;gap:7px}
+  .project-focus-selector button{padding:9px 12px}
+  .project-selected-plan{padding:12px 14px}
+  .project-price-build,.project-final-price{padding:16px}
+  .investment-view .project-investment-title h1{font-size:26px!important}
+  .pad,.financing-wrap,.referral-wrap,.simple-decision,.savings-card,.selected-card{padding:15px}
+  .field input,.field select,.field textarea{font-size:16px}
+  .mode-shell{justify-content:center}
+  .mode-nav{justify-content:center}
+  .mode-nav button,.offer-toggle button{padding:9px 11px;font-size:12.5px}
+  .hero{grid-template-columns:1fr;padding:18px}
+  .hero h2,.presentation .hero h2{font-size:24px}
+  .hero p{font-size:14px}
+  .hero-media{min-height:150px}
+  .brand-strip img{width:200px;height:40px}
+  .customer-strip{grid-template-columns:1fr 1fr}
+  .option-card,.presentation .option-card{min-height:0}
+  .price-focus .big,.presentation .price-focus .big{font-size:34px}
+  .decision .monthly{font-size:36px}
+  .decision h3{font-size:23px}
+  .simple-choice{min-height:0;padding:18px}
+  .simple-choice h3{font-size:24px}
+  .simple-choice .choice-payment{font-size:34px}
+  .selected-title{font-size:26px}
+  .big-number{font-size:36px}
+  .today-offer-head{padding:16px}
+  .today-offer-head h3,.presentation .today-offer-head h3{font-size:21px}
+  .today-offer-body{padding:14px}
+  .price-path-card{min-height:0;padding:16px}
+  .price-path-card .amount,.presentation .price-path-card .amount{font-size:40px}
+  .price-path-card.hero-today .amount,.presentation .price-path-card.hero-today .amount{font-size:48px}
+  .savings-difference{padding:16px}
+  .savings-difference .value{font-size:32px}
+  .payment-hero{grid-template-columns:1fr;gap:10px;padding:16px}
+  .payment-hero .pay-amount,.presentation .payment-hero .pay-amount{font-size:40px}
+  .financing-head h2,.referral-head h2{font-size:22px}
+  .financing-amount{font-size:32px}
+  .financing-price-today{padding:12px 14px}
+  .financing-price-today strong{font-size:24px}
+  .referral-amount{font-size:28px}
+  .summary-table th,.summary-table td{padding:9px 6px;font-size:12px}
+  .investment-card .investment-row.price-today-row strong{font-size:24px}
+  .investment-card .investment-row.easy-pay-row strong{font-size:26px}
+  .final-price-number{font-size:32px}
+  .final-easy-pay-number{font-size:30px}
+  .final-easy-pay-number span{font-size:15px}
+  #toastHost{bottom:calc(14px + env(safe-area-inset-bottom))}
+}
 </style>
   <!-- v10: removed duplicate hero logo from presentation screen; header logo remains. -->
   <!-- v11: compact welcome hero; added value tiles to remove unused green space. -->
