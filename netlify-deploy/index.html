@@ -3535,7 +3535,8 @@ function measureOf(opt){
   return m;
 }
 
-function extraUnitLabel(x){ return x.type === 'multiplier' ? `× ${x.price}` : `${money2(x.price)}/${x.unit || 'each'}`; }
+// Reps see the unit only, never the price per unit.
+function extraUnitLabel(x){ return x.type === 'multiplier' ? 'material $' : ({ft:'per ft', each:'each', hour:'per hour', 'sq ft':'per sq ft'}[x.unit] || x.unit || 'each'); }
 function extraRetail(x, q){ return clamp(q) * Number(x.price || 0); }
 
 function priceBuild(opt, book){
@@ -3591,11 +3592,11 @@ function measureCardHtml(opt){
     ${head('Footage → Price')}
     <div class="jb-group"><div class="jb-group-title">LeafFilter · feet per floor</div>
       <div class="jb-grid">
-        <div class="jb-row jb-cols"><span></span>${LF_SIZES.map(([k, kl])=>`<span class="jb-col">${kl}<small>${money(R[k+'_1'])}${R[k+'_2'] && R[k+'_2']!==R[k+'_1'] ? '–'+money(R[k+'_3']||R[k+'_2']) : ''}/ft</small></span>`).join('')}</div>
+        <div class="jb-row jb-cols"><span></span>${LF_SIZES.map(([k, kl])=>`<span class="jb-col">${kl}</span>`).join('')}</div>
         ${lfRows}
       </div></div>
     <div class="jb-group"><div class="jb-group-title">Gutters &amp; Downspouts · feet</div>
-      <label class="jb-cell jb-single"><span class="jb-col">Seamless gutters &amp; downspouts<small>${money(R.gutter6)}/ft</small></span>${ftInput('g6', m.g6, 'Gutters and downspouts feet')}</label>
+      <label class="jb-cell jb-single"><span class="jb-col">Seamless gutters &amp; downspouts</span>${ftInput('g6', m.g6, 'Gutters and downspouts feet')}</label>
     </div>
     <details class="extras-box" ${extrasCount ? 'open' : ''}><summary>Extras <span id="extrasCount">${extrasCount ? extrasCount + ' added' : 'None added'}</span></summary>
       <div class="extras-grid">${extras.map(x=>{ const q = clamp(m.extras[x.name]); return `<label class="extra-row ${q>0?'has-qty':''}"><span>${escapeHtml(x.name)}</span><small>${escapeHtml(extraUnitLabel(x))}</small><input type="number" inputmode="decimal" min="0" step="any" data-extra="${escapeHtml(x.name)}" value="${q || ''}" placeholder="${x.type==='multiplier'?'$0':'0'}"></label>`; }).join('')}</div>
@@ -3612,7 +3613,7 @@ function measureResultHtml(opt){
     return `<button type="button" class="jb-opt ${k===opt.key?'active':''}" data-jb-option="${k}"><small>Option ${k}</small><b>${ob ? money(ob.opening) : '—'}</b></button>`;
   }).join('');
   const strip = `<div class="jb-compare">${compare}</div><button type="button" class="jb-copy" id="jbCopyAll">Use this footage for all options</button>`;
-  if (!b) return `<div class="measure-empty">Enter footage to calculate the opening price. The $${Number(pb('pricing.jobAdd',0))} set-up fee is added automatically.</div>${strip}`;
+  if (!b) return `<div class="measure-empty">Enter footage to calculate the opening price.</div>${strip}`;
   return `<div class="measure-result">
     <div class="mr-main"><span>Opening Price</span><b>${money(b.opening)}</b></div>
     <div class="mr-tiers">
@@ -3620,7 +3621,7 @@ function measureResultHtml(opt){
       <div class="mr-tier"><small>Par</small><b>${money(b.par)}</b></div>
       <div class="mr-tier"><small>Cost</small><b>${money(b.cost)}</b></div>
     </div>
-    <div class="mr-split">LeafFilter ${money(b.lf)} · Gutters ${money(b.gutter)} · Extras ${money(b.extras)} · Set-up ${money(pb('pricing.jobAdd',0))}</div>
+    <div class="mr-split">Includes the ${money(pb('pricing.jobAdd',0))} set-up fee</div>
     ${b.belowMinimum ? `<div class="measure-warn">Below the ${money(pb('pricing.jobMinimum', 500))} job minimum.</div>` : ''}
   </div>${strip}`;
 }
