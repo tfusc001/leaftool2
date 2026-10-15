@@ -7,7 +7,7 @@
   <meta name="apple-mobile-web-app-title" content="LeafFilter Planner" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="theme-color" content="#0B2E4A" />
-  <title>LeafFilter Home Protection Planner v66</title>
+  <title>LeafFilter Home Protection Planner v67</title>
   <style>
     :root{
       --navy:#082A24; --navy2:#0B3A32; --green:#5FBA42; --green2:#2F7D32;
@@ -1801,6 +1801,14 @@ body.admin-page .admin-card{height:94vh;max-height:94vh}
 .jb-build.wide{display:flex;width:100%;margin-top:10px;padding:13px 16px;font-size:15px}
 @keyframes jbPulse{0%,100%{box-shadow:0 6px 16px rgba(95,186,66,.30),0 0 0 0 rgba(95,186,66,0)}50%{box-shadow:0 6px 16px rgba(95,186,66,.30),0 0 0 6px rgba(95,186,66,.18)}}
 .jb-opt .ok{color:var(--green2);font-weight:950}
+.jb-build.confirm{background:#FFF8E6;color:var(--gold2);border-color:#EED9A3;box-shadow:none}
+.jb-confirm{margin-top:10px;border:1.5px solid #EED9A3;background:#FFFDF5;border-radius:16px;padding:12px;display:grid;gap:10px}
+.jb-confirm-msg{font-size:13.5px;font-weight:800;color:var(--navy);line-height:1.4}
+.jb-confirm-msg b{font-weight:950}
+.jb-confirm-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.jb-confirm-btns button{border-radius:999px;padding:12px 10px;font-weight:950;font-size:14px;font-variant-numeric:tabular-nums;cursor:pointer}
+.jb-confirm .jb-use{background:var(--green);color:#fff;border:1.5px solid var(--green)}
+.jb-confirm .jb-keep{background:#fff;color:var(--navy);border:1.5px solid var(--line)}
 .derived-products{border-radius:14px}
 .flash-ring{animation:flashRing 1.5s ease-out 1}
 @keyframes flashRing{0%{box-shadow:0 0 0 0 rgba(95,186,66,.55);background:#F5FFF2}100%{box-shadow:0 0 0 16px rgba(95,186,66,0);background:transparent}}
@@ -3682,19 +3690,43 @@ function applyCalcRetail(o){
 // finish line: it sets this option's price and products from the footage, confirms it, and moves
 // the rep down to the products and discounts. Editing footage afterwards turns it back to "Build".
 function jbSig(opt){ return JSON.stringify([measureOf(opt), opt.gutterSize || '6', priceBook ? (priceBook.version || 0) : 0, clamp(opt.retail)]); }
+// jbBuilt: undefined = option saved before this button existed; '' = touched since, not built; sig = built.
+// A pre-button option that is still priced straight from footage counts as built.
+let jbConfirm = null; // {key, retail, opening} while the rep picks between a typed price and the footage price
+function jbConfirmFor(opt){
+  const b = priceBuild(opt);
+  return jbConfirm && b && jbConfirm.key === opt.key && jbConfirm.retail === clamp(opt.retail) && jbConfirm.opening === b.opening ? jbConfirm : null;
+}
 function jbBuildState(opt){
-  if (!opt || !priceBook || !priceBook.pricing || !priceBuild(opt)) return 'idle';
+  if (!opt || !priceBook || !priceBook.pricing) return 'idle';
+  const b = priceBuild(opt); if (!b) return 'idle';
+  if (jbConfirmFor(opt)) return 'confirm';
+  if (opt.jbBuilt === undefined) return (opt.retailSource !== 'manual' && clamp(opt.retail) === b.opening) ? 'done' : 'ready';
   return opt.jbBuilt && opt.jbBuilt === jbSig(opt) ? 'done' : 'ready';
 }
+function jbTouched(opt){ if (opt && opt.jbBuilt === undefined) opt.jbBuilt = ''; }
 function jbBuildBtnHtml(opt, wide){
   const s = jbBuildState(opt);
   if (wide && s === 'idle') return '';
   const b = priceBuild(opt);
   const price = wide && b ? ` · ${money(b.opening)}` : '';
   const name = escapeHtml(opt.label || ('Option ' + opt.key));
-  const label = s === 'done' ? `<span class="chk">✓</span> ${name} built${price}` : `Build ${name}${price} <span class="arr">→</span>`;
+  if (s === 'confirm') {
+    if (!wide) return `<button type="button" class="jb-build confirm" data-jb-jump title="Pick a price below">Pick a price <span class="arr">↓</span></button>`;
+    const c = jbConfirmFor(opt);
+    return `<div class="jb-confirm" id="jbConfirmPanel" role="group" aria-label="Choose the price for ${name}">
+      <div class="jb-confirm-msg"><b>You typed ${money(c.retail)}.</b> The footage price is ${money(c.opening)}. Which one goes on ${name}?</div>
+      <div class="jb-confirm-btns"><button type="button" class="jb-use" data-jb-use>Use ${money(c.opening)}</button><button type="button" class="jb-keep" data-jb-keep>Keep ${money(c.retail)}</button></div>
+    </div>`;
+  }
+  const label = s === 'done' ? `<span class="chk">✓</span> ${name} built${wide ? ' · ' + money(clamp(opt.retail) || (b && b.opening) || 0) : ''}` : `Build ${name}${price} <span class="arr">→</span>`;
   const tip = s === 'idle' ? 'Enter footage first' : s === 'done' ? 'Built from the footage. Change any footage to rebuild.' : 'Set this option’s price and products from the footage';
   return `<button type="button" class="jb-build ${s}${wide ? ' wide' : ''}" data-jb-build title="${tip}" aria-label="${s === 'done' ? name + ' built' : 'Build ' + name}">${label}</button>`;
+}
+function jbScrollTo(el, flash){
+  if (!el) return;
+  try { el.scrollIntoView({behavior: 'smooth', block: 'center'}); } catch (e) { el.scrollIntoView(); }
+  if (flash) { el.classList.remove('flash-ring'); void el.offsetWidth; el.classList.add('flash-ring'); }
 }
 function buildOption(opt){
   const b = priceBuild(opt);
@@ -3703,36 +3735,50 @@ function buildOption(opt){
     const f = document.querySelector('#optionEditor [data-measure]'); if (f) f.focus();
     return;
   }
-  opt.retail = b.opening; opt.retailSource = 'calc';
+  const typed = clamp(opt.retail);
+  if (opt.retailSource === 'manual' && typed > 0 && typed !== b.opening) {
+    // A hand-typed price is never replaced silently: the rep picks.
+    jbConfirm = {key: opt.key, retail: typed, opening: b.opening};
+    const mr = $('#measureResult'); if (mr) { mr.innerHTML = measureResultHtml(opt); bindJobBuildExtras(opt); }
+    jbScrollTo($('#jbConfirmPanel'), true);
+    return;
+  }
+  finishBuild(opt, true);
+}
+function finishBuild(opt, useFootage){
+  const b = priceBuild(opt); if (!b) return;
+  jbConfirm = null;
+  if (useFootage) { opt.retail = b.opening; opt.retailSource = 'calc'; }
   syncProductsFromJobBuild(opt);
   opt.jbBuilt = jbSig(opt);
   const r = $('#retail'); if (r) r.value = opt.retail;
   refreshDerivedProducts(opt);
   refreshEditorCalculations(true);
   const n = (opt.products || []).length;
-  showToast(`${opt.label || 'Option ' + opt.key} built · ${money(b.opening)} · ${n} product${n === 1 ? '' : 's'}`);
-  const target = document.querySelector('#derivedProducts .derived-products') || $('#retail');
-  if (target) {
-    try { target.scrollIntoView({behavior: 'smooth', block: 'center'}); } catch (e) { target.scrollIntoView(); }
-    target.classList.remove('flash-ring'); void target.offsetWidth; target.classList.add('flash-ring');
-  }
+  const name = opt.label || 'Option ' + opt.key;
+  showToast(useFootage ? `${name} built · ${money(b.opening)} · ${n} product${n === 1 ? '' : 's'}` : `${name} built · kept your ${money(opt.retail)} price · ${n} product${n === 1 ? '' : 's'}`);
+  jbScrollTo(document.querySelector('#derivedProducts .derived-products') || $('#retail'), true);
 }
 function refreshBuildButtons(opt){
   const top = $('#jbBuildTop'); if (top) top.innerHTML = jbBuildBtnHtml(opt, false);
   document.querySelectorAll('#optionEditor [data-jb-build]').forEach(btn=>btn.onclick = ()=>buildOption(opt));
+  document.querySelectorAll('#optionEditor [data-jb-jump]').forEach(btn=>btn.onclick = ()=>jbScrollTo($('#jbConfirmPanel'), true));
+  document.querySelectorAll('#optionEditor [data-jb-use]').forEach(btn=>btn.onclick = ()=>finishBuild(opt, true));
+  document.querySelectorAll('#optionEditor [data-jb-keep]').forEach(btn=>btn.onclick = ()=>finishBuild(opt, false));
 }
 
 function bindJobBuildExtras(opt){
   refreshBuildButtons(opt);
   document.querySelectorAll('#measureResult [data-jb-option]').forEach(b=>b.onclick = ()=>{ state.editOption = b.dataset.jbOption; state.activeOption = b.dataset.jbOption; render(); });
   const cp = $('#jbCopyAll'); if (cp) cp.onclick = ()=>{
-    ['A','B','C'].forEach(k=>{ if (k === opt.key) return; const o = state.options[k]; o.measure = copyObj(measureOf(opt)); o.gutterSize = opt.gutterSize; applyCalcRetail(o); syncProductsFromJobBuild(o); });
+    ['A','B','C'].forEach(k=>{ if (k === opt.key) return; const o = state.options[k]; o.measure = copyObj(measureOf(opt)); o.gutterSize = opt.gutterSize; o.jbBuilt = ''; applyCalcRetail(o); syncProductsFromJobBuild(o); });
     showToast('Footage copied to all options'); refreshEditorCalculations(true);
   };
 }
 
 function bindMeasureInputs(opt){
   const onMeasure = ()=>{
+    jbTouched(opt);
     applyCalcRetail(opt);
     const r = $('#retail'); if (r && document.activeElement !== r) r.value = opt.retail || '';
     const ec = $('#extrasCount');
@@ -3740,7 +3786,7 @@ function bindMeasureInputs(opt){
     refreshDerivedProducts(opt);
     refreshEditorCalculations(false);
   };
-  document.querySelectorAll('#optionEditor [data-gutter-size]').forEach(b=>b.onclick = ()=>{ opt.gutterSize = b.dataset.gutterSize; document.querySelectorAll('#optionEditor [data-gutter-size]').forEach(x=>x.classList.toggle('active', x===b)); refreshDerivedProducts(opt); refreshEditorCalculations(true); });
+  document.querySelectorAll('#optionEditor [data-gutter-size]').forEach(b=>b.onclick = ()=>{ jbTouched(opt); opt.gutterSize = b.dataset.gutterSize; document.querySelectorAll('#optionEditor [data-gutter-size]').forEach(x=>x.classList.toggle('active', x===b)); refreshDerivedProducts(opt); refreshEditorCalculations(true); });
   document.querySelectorAll('#optionEditor [data-measure]').forEach(el=>{
     el.oninput = ()=>{ const v = clamp(el.value); const m = measureOf(opt); if (v) m[el.dataset.measure] = v; else delete m[el.dataset.measure]; onMeasure(); };
   });
