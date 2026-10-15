@@ -1780,6 +1780,8 @@ body.admin-page .app{display:none}
 body.admin-page #adminModal{background:linear-gradient(135deg,#F7FBFD 0%,#EBF3F7 100%);backdrop-filter:none}
 body.admin-page .admin-card{height:94vh;max-height:94vh}
 @media(max-width:520px){.jb-row{grid-template-columns:48px repeat(2,1fr);gap:6px}.jb-cell input{padding:9px 7px;font-size:16px}}
+.financing-grid.financing-grid-2{grid-template-columns:repeat(2,1fr)}.financing-grid-2 .financing-card{padding:28px}.financing-grid-2 .financing-amount{font-size:52px}
+@media(max-width:700px){.financing-grid.financing-grid-2{grid-template-columns:1fr}}
 @media(max-width:820px){.preview-card{grid-template-columns:repeat(2,1fr)}.admin-foot{flex-direction:column;align-items:stretch}.admin-foot input{min-width:0;width:100%}}
 </style>
   <!-- v10: removed duplicate hero logo from presentation screen; header logo remains. -->
@@ -2093,7 +2095,8 @@ function calcOption(opt){
   const cardAdjustmentAmt = 0;
   const yourPrice = cardPrice;
 
-  const plan = getPlan(opt.planId);
+  let plan = getPlan(opt.planId);
+  { const e = easyPayConfig(); if (plan.id===e.promoHigh || plan.id===e.promoLow) { const want = easyPayPromoFor(checkPrice); if (plan.id!==want && financePlans.some(p=>p.id===want)) { plan = getPlan(want); opt.planId = want; } } }
   const financedPrice = checkPrice;
   const financedWithFees = plan.divide ? financedPrice / plan.divide : financedPrice;
   let monthly = 0;
@@ -2705,7 +2708,12 @@ function decisionSummaryView(k){
 }
 function decisionCard(k){const opt=state.options[k], c=calcOption(opt), cls=k==='B'?'decision featured':k==='C'?'decision best':'decision'; return `<article class="${cls}" data-select="${k}"><div class="eyebrow">${escapeHtml(opt.label)}</div><h3>${escapeHtml(opt.name)}</h3><div class="${k==='C'?'badge gold':'badge'}">${escapeHtml(opt.badge)}</div><div class="product-list" style="margin-top:18px">${productListHtml(opt, true, 7)}</div><div class="monthly">${state.offerMode==='finance'?money(c.monthly)+'<span style="font-size:22px">/mo</span>':money(c.checkPrice)}</div><div class="prompt">This option works best for my home.</div><button class="choice-btn" data-select="${k}">Select ${escapeHtml(opt.label)}</button></article>`;}
 function selectedView(){const k=state.selectedOption||state.activeOption; const opt=state.options[k], c=calcOption(opt); return `<div class="selected-screen"><div class="selected-card"><div class="eyebrow">Your Selected Protection Plan</div><h2 class="selected-title">${escapeHtml(opt.name)}</h2><div class="${k==='C'?'badge gold':'badge'}">${escapeHtml(opt.badge)}</div><div class="product-list" style="margin-top:18px">${productListHtml(opt, true)}</div></div><div class="next-step"><h3>Next Step: Reserve Installation Window</h3><p style="margin:0 0 18px;color:rgba(255,255,255,.88)">This plan gives your home the selected level of LeafFilter protection.</p><div class="price-focus" style="background:#fff;border:0"><div class="label">${paymentModeLabel()}</div><div class="big">${displayPaymentValueHtml(opt,c)}</div><div class="subline">${optionHasPrice(opt)?selectedPaymentSubline(c):'Enter Retail Price before printing or presenting final pricing.'}</div></div><button class="choice-btn" id="printSelected" style="background:#fff;color:var(--navy);margin-top:14px">Print Customer Summary</button><button class="choice-btn" data-next-view="referral" style="background:transparent;border:2px solid #fff;color:#fff;margin-top:10px">Continue to Referral Program</button></div></div>`;}
+// Easy Pay shows two options: the long-term plan, plus a promo picked by job size.
+// Price book (easyPay) can override these; defaults below.
+function easyPayConfig(){ const e = (typeof priceBook!=='undefined' && priceBook && priceBook.easyPay) || {}; return {longTerm: e.longTerm || 'GS-1509', promoHigh: e.promoHigh || 'WF-1019', promoLow: e.promoLow || 'GS-2511', threshold: Number(e.threshold || 5000)}; }
+function easyPayPromoFor(price){ const e = easyPayConfig(); return price >= e.threshold ? e.promoHigh : e.promoLow; }
 const financingHighlights = {
+  'GS-2511':{tag:'No Payments for 6 Months', pitch:'No payments and 0% interest for 6 months.', promoNote:'If not paid in full in 6 months, payments and interest begin (17.99%–26.99% APR).'},
   'WF-1019':{tag:'Most Popular · No Interest', pitch:'Pay it off within 12 months and owe $0 in interest.'},
   'GS-1509':{tag:'Lowest Monthly Payment', pitch:'Spread the investment over 15 years for the smallest possible monthly payment.'},
   'WF-1157':{tag:'Best Rate', pitch:'A reduced 6.9% rate keeps the payment low without stretching out the term.'}
@@ -2716,17 +2724,20 @@ function financingOptionsView(){
   if(!optionHasPrice(opt)){
     return `<div class="financing-wrap"><div class="financing-head"><h2>Easy Pay Options</h2><p>Enter Retail Price before presenting financing options.</p></div></div>`;
   }
-  const plans = financePlans.filter(p=>p.common);
+  const ep = easyPayConfig();
+  const plans = [ep.longTerm, easyPayPromoFor(c.checkPrice)].map(id=>financePlans.find(p=>p.id===id)).filter(Boolean);
   const todayPrice = currentOfferMode()==='check' ? c.checkPrice : c.cardPrice;
   const cards = plans.map(p=>{
     const monthly = monthlyForPlan(c.checkPrice, p);
     const info = financingHighlights[p.id] || {tag:'Easy Pay Option', pitch:p.detail};
     const selected = p.id===opt.planId;
+    const deferred = p.id===ep.promoLow;
     return `<div class="financing-card${selected?' featured':''}" data-plan="${p.id}">
       <div class="financing-tag">${escapeHtml(info.tag)}</div>
       <h3>${escapeHtml(p.customer)}</h3>
-      <div class="financing-amount">${money(monthly)}<span>/mo</span></div>
+      <div class="financing-amount">${deferred ? '$0' : money(monthly)}<span>/mo${deferred ? ' for 6 months' : ''}</span></div>
       <p class="financing-pitch">${escapeHtml(info.pitch)}</p>
+      ${info.promoNote ? `<div class="financing-fine">${escapeHtml(info.promoNote)}</div>` : ''}
       <div class="financing-fine">${escapeHtml(p.label)}</div>
       <div class="financing-select">${selected?'✓ Selected':'Tap to Select'}</div>
     </div>`;
@@ -2734,7 +2745,7 @@ function financingOptionsView(){
   return `<div class="financing-wrap">
     <div class="financing-head"><h2>Your Easy Pay Options</h2><p>Here are the most popular ways homeowners pay for ${escapeHtml(opt.name)}.</p></div>
     <div class="financing-price-today"><span>${escapeHtml(todayPriceLabel())}</span><strong>${money(todayPrice)}</strong></div>
-    <div class="financing-grid">${cards}</div>
+    <div class="financing-grid financing-grid-${plans.length}">${cards}</div>
     <div class="disclaimer">Estimated Monthly Payment - financing subject to credit approval. Final terms, rates, and payments are provided by the lender.</div>
     <button class="next-step-btn project-continue" data-next-view="selected">Continue</button>
   </div>`;
