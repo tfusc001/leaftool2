@@ -1821,7 +1821,8 @@
         <div class="section-title"><div><div class="eyebrow">Rep Setup</div><h2>Customer + Option Builder</h2></div></div>
         <div class="row"><div class="field"><label>Customer Name</label><input id="customerName" placeholder="Homeowner"></div><div class="field"><label>Date</label><input id="apptDate" type="date"></div></div>
         <div class="field"><label>Property Address</label><input id="address" placeholder="Norfolk / Hampton Roads"></div>
-        <div class="row"><div class="field"><label>Property ZIP</label><input id="zip" inputmode="numeric" maxlength="5" placeholder="ZIP code"></div><div class="field"><label>Sales Tax</label><div class="tax-pill" id="taxPill">Enter ZIP</div></div></div>
+        <div class="row"><div class="field"><label>State</label><select id="jobState"><option value="VA">Virginia</option><option value="NC">North Carolina</option></select></div><div class="field"><label>Sales Tax</label><div class="tax-pill" id="taxPill">No sales tax</div></div></div>
+        <div class="field hidden" id="zipField"><label>Property ZIP (sets NC county tax)</label><input id="zip" inputmode="numeric" maxlength="5" placeholder="ZIP code"></div>
         <div class="row"><div class="field"><label>Customer Phone</label><input id="customerPhone" type="tel" inputmode="tel" placeholder="Phone number"></div><div class="field"><label>Customer Email</label><input id="customerEmail" type="email" placeholder="Email address"></div></div>
         <div class="row"><div class="field"><label>Representative</label><input id="repName" placeholder="Sales Consultant"></div><div class="field"><label>Branch</label><input id="branch" value="Norfolk"></div></div>
         <div class="divider"></div>
@@ -1954,7 +1955,7 @@ const REP_INFO_KEY = 'lf-norfolk-planner-rep-info';
 const WORKING_STATE_KEY = 'lf-norfolk-planner-working-state-v60';
 function savedRepInfo(){try{return JSON.parse(localStorage.getItem(REP_INFO_KEY)||'{}')||{};}catch(e){return {};}}
 function persistRepInfo(){try{localStorage.setItem(REP_INFO_KEY, JSON.stringify({repName:state.repName||'', branch:state.branch||'Norfolk'}));}catch(e){}}
-const defaultState = () => ({customerName:'', customerPhone:'', customerEmail:'', address:'', repName:savedRepInfo().repName||'', branch:savedRepInfo().branch||'Norfolk', apptDate:new Date().toISOString().slice(0,10), activeOption:'B', editOption:'B', selectedOption:'B', view:'investment', focusOption:'B', offerMode:'finance', presentation:false, revealStep:6, referral:{name:'',contact:''}, zip:'', selfGen:false, options:defaultOptions()});
+const defaultState = () => ({customerName:'', customerPhone:'', customerEmail:'', address:'', repName:savedRepInfo().repName||'', branch:savedRepInfo().branch||'Norfolk', apptDate:new Date().toISOString().slice(0,10), activeOption:'B', editOption:'B', selectedOption:'B', view:'investment', focusOption:'B', offerMode:'finance', presentation:false, revealStep:6, referral:{name:'',contact:''}, jobState:'VA', zip:'', selfGen:false, options:defaultOptions()});
 let state = defaultState();
 const $ = s => document.querySelector(s);
 const money = n => (isFinite(n)?n:0).toLocaleString('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0});
@@ -2112,7 +2113,7 @@ function displayPaymentValueHtml(opt,c){
 function displayPaymentValuePlain(opt,c){
   return optionHasPrice(opt) ? selectedPaymentValuePlain(c) : priceNotEnteredPlain();
 }
-function setBaseInputs(){['customerName','customerPhone','customerEmail','address','zip','repName','branch','apptDate'].forEach(id=>{const el=$('#'+id); if(!el) return; if(document.activeElement!==el) el.value=state[id]||''; el.oninput=()=>{state[id]=el.value; if(id==='repName'||id==='branch') persistRepInfo(); if(id==='zip'){renderTaxPill(); refreshEditorCalculations(false);} renderHeaderInfo(); scheduleMainView(); schedulePrintSheet(); scheduleAutosave();};});}
+function setBaseInputs(){['customerName','customerPhone','customerEmail','address','jobState','zip','repName','branch','apptDate'].forEach(id=>{const el=$('#'+id); if(!el) return; if(document.activeElement!==el) el.value=state[id]||''; el.oninput=()=>{state[id]=el.value; if(id==='repName'||id==='branch') persistRepInfo(); if(id==='zip'||id==='jobState'){renderTaxPill(); refreshEditorCalculations(false);} renderHeaderInfo(); scheduleMainView(); schedulePrintSheet(); scheduleAutosave();};});}
 
 let mainViewTimer=null, autosaveTimer=null, printSheetDirty=true;
 function scheduleMainView(){clearTimeout(mainViewTimer); mainViewTimer=setTimeout(()=>renderMainView(),140);}
@@ -3641,23 +3642,24 @@ function finalOfferControlHtml(k){
 
 /* ---------------------------------------------------------------- NC sales tax */
 function taxInfo(){
+  // Sales tax applies only to North Carolina jobs. Virginia (the default) has none.
+  if ((state.jobState || 'VA') !== 'NC') return {state: 'VA', known: false, nc: false};
   const z = String(state.zip || '').trim().slice(0, 5);
-  if (!/^\d{5}$/.test(z)) return null;
+  if (!/^\d{5}$/.test(z)) return {state: 'NC', known: false, nc: true, noZip: true};
   const county = pb('tax.zips', {})[z];
-  const ncPrefix = /^2[78]/.test(z);
-  const vaPrefix = Number(z.slice(0, 3)) >= 201 && Number(z.slice(0, 3)) <= 246;
-  if (!county) return {zip: z, known: false, nc: ncPrefix, va: vaPrefix};
-  return {zip: z, known: true, nc: true, county, rate: Number(pb('tax.counties', {})[county] || 0)};
+  if (!county) return {state: 'NC', zip: z, known: false, nc: true};
+  return {state: 'NC', zip: z, known: true, nc: true, county, rate: Number(pb('tax.counties', {})[county] || 0)};
 }
 function taxAmount(price){ const t = taxInfo(); return t && t.known ? Math.round(price * t.rate / 100) : 0; }
 function renderTaxPill(){
   const el = $('#taxPill'); if (!el) return;
   const t = taxInfo();
+  const zf = $('#zipField'); if (zf) zf.classList.toggle('hidden', !t.nc);
   el.className = 'tax-pill';
-  if (!t) { el.innerHTML = 'Enter ZIP'; return; }
+  if (!t.nc) { el.innerHTML = 'No sales tax<small>Virginia job</small>'; return; }
   if (t.known) { el.classList.add('ok'); el.innerHTML = `${t.rate}% NC sales tax<small>${escapeHtml(t.county)} County</small>`; return; }
-  if (t.nc) { el.classList.add('warn'); el.innerHTML = `NC ZIP not in territory list<small>Tax not set · ask admin to add it</small>`; return; }
-  el.innerHTML = `No NC sales tax<small>${t.va ? 'Virginia address' : 'Outside NC'}</small>`;
+  el.classList.add('warn');
+  el.innerHTML = t.noZip ? 'Enter the ZIP<small>Sets the NC county rate</small>' : 'ZIP not in NC territory list<small>Tax not set · ask admin to add it</small>';
 }
 function taxRowsHtml(price){
   const t = taxInfo(); if (!t || !t.known || !(price > 0)) return '';
