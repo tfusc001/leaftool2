@@ -7,7 +7,7 @@
   <meta name="apple-mobile-web-app-title" content="LeafFilter Planner" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="theme-color" content="#0B2E4A" />
-  <title>LeafFilter Home Protection Planner v65</title>
+  <title>LeafFilter Home Protection Planner v66</title>
   <style>
     :root{
       --navy:#082A24; --navy2:#0B3A32; --green:#5FBA42; --green2:#2F7D32;
@@ -1790,6 +1790,21 @@ body.admin-page .admin-card{height:94vh;max-height:94vh}
 .jb-seg{display:inline-flex;background:#fff;border:1px solid var(--line);border-radius:999px;padding:3px}
 .jb-seg button{border-radius:999px;padding:6px 14px;font-weight:950;font-size:13px;background:transparent;color:var(--navy)}
 .jb-seg button.active{background:var(--navy);color:#fff}
+.jb-side{display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+.jb-build{display:inline-flex;align-items:center;justify-content:center;gap:7px;border-radius:999px;padding:10px 16px;font-weight:950;font-size:13.5px;letter-spacing:.01em;background:var(--green);color:#fff;border:1.5px solid var(--green);box-shadow:0 6px 16px rgba(95,186,66,.32);cursor:pointer;white-space:nowrap;transition:transform .12s ease,background .2s ease,color .2s ease}
+.jb-build:active{transform:scale(.97)}
+.jb-build .arr{font-size:15px;line-height:1}
+.jb-build .chk{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;background:var(--green);color:#fff;font-size:11px}
+.jb-build.ready{animation:jbPulse 2.4s ease-in-out infinite}
+.jb-build.idle{background:#EEF2F4;color:#8A97A3;border-color:#E1E7EC;box-shadow:none}
+.jb-build.done{background:#fff;color:var(--green2);border-color:var(--green);box-shadow:none}
+.jb-build.wide{display:flex;width:100%;margin-top:10px;padding:13px 16px;font-size:15px}
+@keyframes jbPulse{0%,100%{box-shadow:0 6px 16px rgba(95,186,66,.30),0 0 0 0 rgba(95,186,66,0)}50%{box-shadow:0 6px 16px rgba(95,186,66,.30),0 0 0 6px rgba(95,186,66,.18)}}
+.jb-opt .ok{color:var(--green2);font-weight:950}
+.derived-products{border-radius:14px}
+.flash-ring{animation:flashRing 1.5s ease-out 1}
+@keyframes flashRing{0%{box-shadow:0 0 0 0 rgba(95,186,66,.55);background:#F5FFF2}100%{box-shadow:0 0 0 16px rgba(95,186,66,0);background:transparent}}
+@media (prefers-reduced-motion: reduce){.jb-build.ready{animation:none}.flash-ring{animation:none}}
 @media(max-width:820px){.preview-card{grid-template-columns:repeat(2,1fr)}.admin-foot{flex-direction:column;align-items:stretch}.admin-foot input{min-width:0;width:100%}}
 </style>
   <!-- v10: removed duplicate hero logo from presentation screen; header logo remains. -->
@@ -3586,7 +3601,7 @@ function ftInput(key, value, label){ return `<input type="number" inputmode="dec
 
 function measureCardHtml(opt){
   const st = priceBookStatus();
-  const head = (title)=>`<div class="jb-head"><div><div class="eyebrow">Job Build · ${escapeHtml(opt.label)}</div><h3>${title}</h3></div><span class="pb-pill ${st.cls}">${st.text}</span></div>`;
+  const head = (title)=>`<div class="jb-head"><div><div class="eyebrow">Job Build · ${escapeHtml(opt.label)}</div><h3>${title}</h3></div><div class="jb-side"><span class="pb-pill ${st.cls}">${st.text}</span>${priceBook && priceBook.pricing ? `<span id="jbBuildTop">${jbBuildBtnHtml(opt, false)}</span>` : ''}</div></div>`;
   if (!priceBook || !priceBook.pricing) {
     return `<section class="job-build">${head('Footage → Price')}<div class="measure-empty">Prices load from Google Sheets the first time this device opens the app online. Until then, type the retail price below.</div></section>`;
   }
@@ -3621,7 +3636,8 @@ function measureResultHtml(opt){
   if (!priceBook) return '';
   const compare = ['A','B','C'].map(k=>{
     const o = state.options[k]; const ob = priceBuild(o);
-    return `<button type="button" class="jb-opt ${k===opt.key?'active':''}" data-jb-option="${k}"><small>Option ${k}</small><b>${ob ? money(ob.opening) : '—'}</b></button>`;
+    const done = jbBuildState(o) === 'done';
+    return `<button type="button" class="jb-opt ${k===opt.key?'active':''}" data-jb-option="${k}"><small>Option ${k}${done ? ' <span class="ok" title="Built">✓</span>' : ''}</small><b>${ob ? money(ob.opening) : '—'}</b></button>`;
   }).join('');
   const strip = `<div class="jb-compare">${compare}</div><button type="button" class="jb-copy" id="jbCopyAll">Use this footage for all options</button>`;
   if (!b) return `<div class="measure-empty">Enter footage to calculate the opening price.</div>${strip}`;
@@ -3634,7 +3650,7 @@ function measureResultHtml(opt){
     </div>
     <div class="mr-split">Includes the ${money(pb('pricing.jobAdd',0))} set-up fee</div>
     ${b.belowMinimum ? `<div class="measure-warn">Below the ${money(pb('pricing.jobMinimum', 500))} job minimum.</div>` : ''}
-  </div>${strip}`;
+  </div>${jbBuildBtnHtml(opt, true)}${strip}`;
 }
 
 function retailSourceHtml(opt){
@@ -3661,7 +3677,53 @@ function applyCalcRetail(o){
   if (o.retailSource !== 'manual') { o.retail = b ? b.opening : 0; o.retailSource = 'calc'; }
 }
 
+/* ---------------------------------------------------------------- Build Option: the "I'm done with footage" step */
+// Pricing still updates live while the rep types (so nothing is ever stale). The button is the
+// finish line: it sets this option's price and products from the footage, confirms it, and moves
+// the rep down to the products and discounts. Editing footage afterwards turns it back to "Build".
+function jbSig(opt){ return JSON.stringify([measureOf(opt), opt.gutterSize || '6', priceBook ? (priceBook.version || 0) : 0, clamp(opt.retail)]); }
+function jbBuildState(opt){
+  if (!opt || !priceBook || !priceBook.pricing || !priceBuild(opt)) return 'idle';
+  return opt.jbBuilt && opt.jbBuilt === jbSig(opt) ? 'done' : 'ready';
+}
+function jbBuildBtnHtml(opt, wide){
+  const s = jbBuildState(opt);
+  if (wide && s === 'idle') return '';
+  const b = priceBuild(opt);
+  const price = wide && b ? ` · ${money(b.opening)}` : '';
+  const name = escapeHtml(opt.label || ('Option ' + opt.key));
+  const label = s === 'done' ? `<span class="chk">✓</span> ${name} built${price}` : `Build ${name}${price} <span class="arr">→</span>`;
+  const tip = s === 'idle' ? 'Enter footage first' : s === 'done' ? 'Built from the footage. Change any footage to rebuild.' : 'Set this option’s price and products from the footage';
+  return `<button type="button" class="jb-build ${s}${wide ? ' wide' : ''}" data-jb-build title="${tip}" aria-label="${s === 'done' ? name + ' built' : 'Build ' + name}">${label}</button>`;
+}
+function buildOption(opt){
+  const b = priceBuild(opt);
+  if (!b) {
+    showToast('Enter footage first, then build the option.', 'warn');
+    const f = document.querySelector('#optionEditor [data-measure]'); if (f) f.focus();
+    return;
+  }
+  opt.retail = b.opening; opt.retailSource = 'calc';
+  syncProductsFromJobBuild(opt);
+  opt.jbBuilt = jbSig(opt);
+  const r = $('#retail'); if (r) r.value = opt.retail;
+  refreshDerivedProducts(opt);
+  refreshEditorCalculations(true);
+  const n = (opt.products || []).length;
+  showToast(`${opt.label || 'Option ' + opt.key} built · ${money(b.opening)} · ${n} product${n === 1 ? '' : 's'}`);
+  const target = document.querySelector('#derivedProducts .derived-products') || $('#retail');
+  if (target) {
+    try { target.scrollIntoView({behavior: 'smooth', block: 'center'}); } catch (e) { target.scrollIntoView(); }
+    target.classList.remove('flash-ring'); void target.offsetWidth; target.classList.add('flash-ring');
+  }
+}
+function refreshBuildButtons(opt){
+  const top = $('#jbBuildTop'); if (top) top.innerHTML = jbBuildBtnHtml(opt, false);
+  document.querySelectorAll('#optionEditor [data-jb-build]').forEach(btn=>btn.onclick = ()=>buildOption(opt));
+}
+
 function bindJobBuildExtras(opt){
+  refreshBuildButtons(opt);
   document.querySelectorAll('#measureResult [data-jb-option]').forEach(b=>b.onclick = ()=>{ state.editOption = b.dataset.jbOption; state.activeOption = b.dataset.jbOption; render(); });
   const cp = $('#jbCopyAll'); if (cp) cp.onclick = ()=>{
     ['A','B','C'].forEach(k=>{ if (k === opt.key) return; const o = state.options[k]; o.measure = copyObj(measureOf(opt)); o.gutterSize = opt.gutterSize; applyCalcRetail(o); syncProductsFromJobBuild(o); });
