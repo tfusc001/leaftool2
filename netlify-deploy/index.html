@@ -7,7 +7,7 @@
   <meta name="apple-mobile-web-app-title" content="LeafFilter Planner" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="theme-color" content="#0B2E4A" />
-  <title>LeafFilter Home Protection Planner v64</title>
+  <title>LeafFilter Home Protection Planner v65</title>
   <style>
     :root{
       --navy:#082A24; --navy2:#0B3A32; --green:#5FBA42; --green2:#2F7D32;
@@ -1782,6 +1782,14 @@ body.admin-page .admin-card{height:94vh;max-height:94vh}
 @media(max-width:520px){.jb-row{grid-template-columns:48px repeat(2,1fr);gap:6px}.jb-cell input{padding:9px 7px;font-size:16px}}
 .financing-grid.financing-grid-2{grid-template-columns:repeat(2,1fr)}.financing-grid-2 .financing-card{padding:28px}.financing-grid-2 .financing-amount{font-size:52px}
 @media(max-width:700px){.financing-grid.financing-grid-2{grid-template-columns:1fr}}
+.derived-products .dp-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
+.dp-chip{display:inline-flex;align-items:center;gap:7px;border-radius:999px;background:#F5FFF2;border:1px solid #CFE7C8;padding:6px 11px 6px 6px;font-size:12.5px;font-weight:900;color:var(--navy)}
+.dp-chip .icon{width:24px;height:24px;border-radius:50%;background:var(--mint);color:var(--green2);display:inline-grid;place-items:center;font-size:9.5px;font-weight:950}
+.jb-size{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:8px 2px 4px;font-size:11px;font-weight:950;color:var(--navy)}
+.jb-size small{font-weight:800;color:var(--muted)}
+.jb-seg{display:inline-flex;background:#fff;border:1px solid var(--line);border-radius:999px;padding:3px}
+.jb-seg button{border-radius:999px;padding:6px 14px;font-weight:950;font-size:13px;background:transparent;color:var(--navy)}
+.jb-seg button.active{background:var(--navy);color:#fff}
 @media(max-width:820px){.preview-card{grid-template-columns:repeat(2,1fr)}.admin-foot{flex-direction:column;align-items:stretch}.admin-foot input{min-width:0;width:100%}}
 </style>
   <!-- v10: removed duplicate hero logo from presentation screen; header logo remains. -->
@@ -2056,6 +2064,7 @@ function quickStartOptions(selected){
   return `<option value="10p" ${selected==='10p'?'selected':''}>10%</option><option value="5p" ${selected==='5p'?'selected':''}>5%</option><option value="750" ${selected==='750'?'selected':''}>$750</option><option value="500" ${selected==='500'?'selected':''}>$500</option><option value="none" ${selected==='none'?'selected':''}>No Quick Start</option>`;
 }
 function calcOption(opt){
+  if (typeof syncProductsFromJobBuild === 'function') { try { syncProductsFromJobBuild(opt); } catch (e) {} }
   const retail = clamp(opt.retail); let running = retail;
   let seniorAmt=0, militaryAmt=0, quickAmt=0, couponAmt=0, preferredPaymentAmt=0, flexibleAmt=0;
   // Each discount is rounded to whole dollars as it is applied so every
@@ -2267,7 +2276,8 @@ function renderOptionEditor(){
     <div class="field"><label>Retail Price (Opening)</label><input id="retail" type="number" inputmode="decimal" min="0" step="1" value="${opt.retail||''}" placeholder="Enter retail price"><div class="retail-source" id="retailSource">${retailSourceHtml(opt)}</div></div>
     <div class="field"><label>Option Name</label><input id="optName" value="${escapeHtml(opt.name)}"></div>
     <div class="field"><label>Customer-Facing Badge</label><input id="optBadge" value="${escapeHtml(opt.badge)}"></div>
-    <div class="field"><label>Products Included</label><div class="product-check">${productCatalog.map(p=>`<label class="check" title="${escapeHtml(productHelp[p]||'')}"><input type="checkbox" class="prodCheck" value="${escapeHtml(p)}" ${opt.products.includes(p)?'checked':''}> <span class="icon">${escapeHtml(productIcons[p]||'AD')}</span> ${escapeHtml(p)}</label>`).join('')}</div><div class="help">Product selections are display-only. Price comes from the Job Build above.</div></div>
+    <div id="derivedProducts">${derivedProductsHtml(opt)}</div>
+    <div class="field ${jobBuildHasFootage(opt)?'hidden':''}" id="manualProducts"><label>Products Included</label><div class="product-check">${productCatalog.map(p=>`<label class="check" title="${escapeHtml(productHelp[p]||'')}"><input type="checkbox" class="prodCheck" value="${escapeHtml(p)}" ${opt.products.includes(p)?'checked':''}> <span class="icon">${escapeHtml(productIcons[p]||'AD')}</span> ${escapeHtml(p)}</label>`).join('')}</div><div class="help">Product selections are display-only. Shown only when the price is typed in by hand. With footage, products are set by the Job Build.</div></div>
     <div class="field"><label>Professional Custom Product / Add-On</label><input id="customProduct" value="${escapeHtml(opt.customProduct||'')}" placeholder="Example: Specialty roofline work included"><div class="help">Use this for unusual job-specific work. Keep the wording customer-friendly because it can appear in Presentation Mode and on the Decision Screen.</div></div>
     <div class="field"><label>Scope / Presentation Notes</label><textarea id="optNotes">${escapeHtml(opt.notes||'')}</textarea></div>
     <div class="row"><label class="check"><input type="checkbox" id="senior" ${opt.senior?'checked':''}> Senior ${pb('discounts.seniorPct',5)}%</label><label class="check"><input type="checkbox" id="military" ${opt.military?'checked':''}> Military ${pb('discounts.militaryPct',5)}%</label></div>
@@ -2586,7 +2596,7 @@ function scopeItems(opt){
     add('50-year sealant applied where applicable');
   }
 
-  if(downs) add('3” x 4” Oversized Downspouts unless otherwise specified');
+  if(downs) add(five && !six ? '2” x 3” Downspouts unless otherwise specified' : '3” x 4” Oversized Downspouts unless otherwise specified');
 
   if(lf || gutters || downs) add('Complete cleanup and removal of debris');
 
@@ -3597,6 +3607,7 @@ function measureCardHtml(opt){
       </div></div>
     <div class="jb-group"><div class="jb-group-title">Gutters &amp; Downspouts · feet</div>
       <label class="jb-cell jb-single"><span class="jb-col">Seamless gutters &amp; downspouts</span>${ftInput('g6', m.g6, 'Gutters and downspouts feet')}</label>
+      <div class="jb-size"><span>Gutter size <small>(scope only, same price)</small></span><div class="jb-seg">${['5','6'].map(z=>`<button type="button" class="${(opt.gutterSize||'6')===z?'active':''}" data-gutter-size="${z}">${z}"</button>`).join('')}</div></div>
     </div>
     <details class="extras-box" ${extrasCount ? 'open' : ''}><summary>Extras <span id="extrasCount">${extrasCount ? extrasCount + ' added' : 'None added'}</span></summary>
       <div class="extras-grid">${extras.map(x=>{ const q = clamp(m.extras[x.name]); return `<label class="extra-row ${q>0?'has-qty':''}"><span>${escapeHtml(x.name)}</span><small>${escapeHtml(extraUnitLabel(x))}</small><input type="number" inputmode="decimal" min="0" step="any" data-extra="${escapeHtml(x.name)}" value="${q || ''}" placeholder="${x.type==='multiplier'?'$0':'0'}"></label>`; }).join('')}</div>
@@ -3653,7 +3664,7 @@ function applyCalcRetail(o){
 function bindJobBuildExtras(opt){
   document.querySelectorAll('#measureResult [data-jb-option]').forEach(b=>b.onclick = ()=>{ state.editOption = b.dataset.jbOption; state.activeOption = b.dataset.jbOption; render(); });
   const cp = $('#jbCopyAll'); if (cp) cp.onclick = ()=>{
-    ['A','B','C'].forEach(k=>{ if (k === opt.key) return; const o = state.options[k]; o.measure = copyObj(measureOf(opt)); applyCalcRetail(o); });
+    ['A','B','C'].forEach(k=>{ if (k === opt.key) return; const o = state.options[k]; o.measure = copyObj(measureOf(opt)); o.gutterSize = opt.gutterSize; applyCalcRetail(o); syncProductsFromJobBuild(o); });
     showToast('Footage copied to all options'); refreshEditorCalculations(true);
   };
 }
@@ -3664,8 +3675,10 @@ function bindMeasureInputs(opt){
     const r = $('#retail'); if (r && document.activeElement !== r) r.value = opt.retail || '';
     const ec = $('#extrasCount');
     if (ec) { const n = Object.values(measureOf(opt).extras).filter(v=>clamp(v) > 0).length; ec.textContent = n ? n + ' added' : 'None added'; }
+    refreshDerivedProducts(opt);
     refreshEditorCalculations(false);
   };
+  document.querySelectorAll('#optionEditor [data-gutter-size]').forEach(b=>b.onclick = ()=>{ opt.gutterSize = b.dataset.gutterSize; document.querySelectorAll('#optionEditor [data-gutter-size]').forEach(x=>x.classList.toggle('active', x===b)); refreshDerivedProducts(opt); refreshEditorCalculations(true); });
   document.querySelectorAll('#optionEditor [data-measure]').forEach(el=>{
     el.oninput = ()=>{ const v = clamp(el.value); const m = measureOf(opt); if (v) m[el.dataset.measure] = v; else delete m[el.dataset.measure]; onMeasure(); };
   });
@@ -3679,6 +3692,46 @@ function bindMeasureInputs(opt){
     };
   });
   bindJobBuildExtras(opt);
+}
+
+
+/* ---------------------------------------------------------------- Products come from the Job Build */
+// Map an extra to a customer-facing product. An admin can set x.product explicitly;
+// otherwise the name decides. Extras with no match (mitres, hangers, labor) are work, not products.
+function productForExtra(x){
+  if (x.product) return x.product;
+  const n = String(x.name || '').toLowerCase();
+  if (/wrap fascia|trim wrap/.test(n)) return 'Trim Wrap';
+  if (/soffit|porch ceiling/.test(n)) return 'Soffit';
+  if (/fascia/.test(n)) return 'Fascia';
+  if (/apron|drip edge/.test(n)) return 'Gutter Apron';
+  if (/ground spout|spout saver/.test(n)) return 'Ground Spout';
+  if (/modify.*height|re-?slope/.test(n)) return 'Re-Slope Gutter';
+  if (/clean, seal|clean \/ seal|seal & reinforce/.test(n)) return 'Clean / Seal / Reinforce';
+  return '';
+}
+function jobBuildHasFootage(opt){ return !!(priceBook && priceBuild(opt)); }
+function derivedProducts(opt){
+  const m = measureOf(opt), out = [];
+  const add = p=>{ if (p && !out.includes(p)) out.push(p); };
+  if (['1','2','3'].some(f=>clamp(m['lf6_'+f]) || clamp(m['vm_'+f]))) add('LeafFilter');
+  if (clamp(m.g6)) { add((opt.gutterSize || '6') === '5' ? '5” Gutters' : '6” Gutters'); add('Downspouts'); }
+  (pb('pricing.extras', []) || []).forEach(x=>{ if (clamp((m.extras || {})[x.name])) add(productForExtra(x)); });
+  return productCatalog.filter(p=>out.includes(p));
+}
+// Keep opt.products in step with the footage so scope, warranty, cards, and print all match the price.
+function syncProductsFromJobBuild(opt){ if (opt && jobBuildHasFootage(opt)) opt.products = derivedProducts(opt); }
+function derivedProductsHtml(opt){
+  if (!jobBuildHasFootage(opt)) return '';
+  const list = derivedProducts(opt);
+  return `<div class="field derived-products"><label>Included in this option</label>
+    <div class="dp-chips">${list.map(p=>`<span class="dp-chip"><span class="icon">${escapeHtml(productIcons[p]||'AD')}</span>${escapeHtml(customerProductNames[p] || p)}</span>`).join('') || '<span class="help">Add footage to list products.</span>'}</div>
+    <div class="help">Set by the Job Build: anything with footage is included and priced. Use the custom add-on line for anything else.</div></div>`;
+}
+function refreshDerivedProducts(opt){
+  syncProductsFromJobBuild(opt);
+  const d = $('#derivedProducts'); if (d) d.innerHTML = derivedProductsHtml(opt);
+  const man = $('#manualProducts'); if (man) man.classList.toggle('hidden', jobBuildHasFootage(opt));
 }
 
 /* ---------------------------------------------------------------- Rep-only numbers */
