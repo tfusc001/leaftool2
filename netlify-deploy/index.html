@@ -7,7 +7,7 @@
   <meta name="apple-mobile-web-app-title" content="LeafFilter Planner" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="theme-color" content="#0B2E4A" />
-  <title>LeafFilter Norfolk Home Protection Planner v54 Decision Price Savings Hero</title>
+  <title>LeafFilter Norfolk Home Protection Planner v63</title>
   <style>
     :root{
       --navy:#082A24; --navy2:#0B3A32; --green:#5FBA42; --green2:#2F7D32;
@@ -1610,6 +1610,133 @@
   .final-easy-pay-number span{font-size:15px}
   #toastHost{bottom:calc(14px + env(safe-area-inset-bottom))}
 }
+
+/* ================= v63 Price Book merge ================= */
+.measure-card{margin:14px 0 4px;padding:16px;border-radius:20px;background:linear-gradient(180deg,#F8FFF6 0%,#fff 70%);border:1px solid #CFE7C8;box-shadow:0 10px 24px rgba(8,42,36,.06)}
+.measure-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:6px}
+.measure-head h3{margin:3px 0 0;font-size:17px;color:var(--navy)}
+.pb-pill{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:6px 10px;font-size:11px;font-weight:950;letter-spacing:.03em;white-space:nowrap;background:#EAF6E6;color:var(--green2);border:1px solid #CFE7C8}
+.pb-pill::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--green)}
+.pb-pill.warn{background:#FFF8E6;color:var(--gold2);border-color:#EED9A3}.pb-pill.warn::before{background:var(--gold)}
+.measure-sub{font-size:11px;color:var(--muted);font-weight:950;text-transform:uppercase;letter-spacing:.06em;margin:12px 0 -4px}
+.measure-row3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.measure-row3 .field{margin:8px 0}.measure-row3 .field label{font-size:10px}
+.measure-card .field input{padding:10px 11px;text-align:right;font-variant-numeric:tabular-nums;font-weight:800}
+.measure-card input::placeholder,.extra-row input::placeholder{color:#C3CDD4;font-weight:700}
+.extras-box{margin-top:10px;border:1px solid var(--line);border-radius:15px;background:#fff;overflow:hidden}
+.extras-box summary{list-style:none;cursor:pointer;padding:11px 13px;font-weight:950;color:var(--navy);display:flex;justify-content:space-between;align-items:center}
+.extras-box summary::-webkit-details-marker{display:none}
+.extras-box summary span{font-size:12px;color:var(--muted);font-weight:850}
+.extras-box summary::after{content:"+";font-size:18px;color:var(--green2);margin-left:8px}
+.extras-box[open] summary::after{content:"–"}
+.extras-grid{display:grid;gap:6px;padding:4px 12px 12px;max-height:300px;overflow:auto}
+.extra-row{display:grid;grid-template-columns:1fr 58px 70px;gap:8px;align-items:center;font-size:13px;font-weight:800;color:var(--navy)}
+.extra-row small{color:var(--muted);font-weight:800;text-align:right;font-variant-numeric:tabular-nums}
+.extra-row input{width:100%;border:1px solid var(--line);border-radius:10px;padding:8px;text-align:right;font-weight:850}
+.extra-row.has-qty{color:var(--green2)}.extra-row.has-qty input{border-color:#9ED48C;background:#F8FFF6}
+.measure-result{margin-top:12px;border-radius:16px;background:var(--navy);color:#fff;padding:13px 14px;display:grid;gap:7px}
+.measure-result .mr-main{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.measure-result .mr-main span{font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:950;color:#BFE8B0}
+.measure-result .mr-main b{font-size:26px;font-variant-numeric:tabular-nums}
+.measure-result .mr-tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.measure-result .mr-tier{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:11px;padding:7px 8px}
+.measure-result .mr-tier small{display:block;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.66);font-weight:900}
+.measure-result .mr-tier b{font-size:15px;font-variant-numeric:tabular-nums}
+.measure-empty{margin-top:12px;border:1px dashed #BFD9B5;border-radius:14px;padding:12px;color:var(--muted);font-size:13px;font-weight:800;text-align:center}
+.measure-warn{font-size:12px;font-weight:850;color:#FFD98A}
+.retail-source{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:6px;font-size:12px;font-weight:850;color:var(--muted)}
+.retail-source button{background:none;color:var(--green2);font-weight:950;padding:0;text-decoration:underline}
+.rep-numbers{margin-top:12px;border-radius:18px;border:1px solid #E7D59B;background:linear-gradient(180deg,#FFFDF5,#fff);padding:14px}
+.rep-numbers-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.rep-chip{font-size:10px;letter-spacing:.12em;text-transform:uppercase;font-weight:950;color:var(--gold2);background:#FFF3D1;border:1px solid #EED9A3;border-radius:999px;padding:5px 9px}
+.rep-numbers-head small{font-size:11px;color:var(--muted);font-weight:800}
+.rep-tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.rep-tile{border:1px solid var(--line);border-radius:13px;background:#fff;padding:8px 9px}
+.rep-tile small{display:block;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:950}
+.rep-tile b{font-size:16px;color:var(--navy);font-variant-numeric:tabular-nums}
+.rep-commission{margin-top:10px;display:flex;justify-content:space-between;align-items:center;gap:10px;border-radius:14px;background:var(--navy);color:#fff;padding:12px 13px}
+.rep-commission span{font-size:11px;letter-spacing:.07em;text-transform:uppercase;font-weight:950;color:#BFE8B0}
+.rep-commission b{font-size:24px;font-variant-numeric:tabular-nums}
+.rep-commission.negative b{color:#FFB4A9}
+.rep-line{display:flex;justify-content:space-between;gap:10px;padding:7px 0;border-bottom:1px dashed #E5E9DA;font-size:13px;font-weight:800;color:var(--navy)}
+.rep-line:last-child{border-bottom:0}.rep-line .up{color:var(--green2)}.rep-line .down{color:var(--danger)}
+.rep-numbers .field{margin:8px 0}
+.cost-deal{margin-top:10px;border-radius:14px;border:1px dashed #CDA349;padding:10px 12px;display:flex;justify-content:space-between;align-items:center;gap:10px;font-weight:900;color:var(--navy)}
+.cost-deal small{display:block;color:var(--muted);font-size:11px;font-weight:800}
+.cost-deal b{font-size:18px}
+.tax-pill{min-height:46px;border:1px solid var(--line);border-radius:14px;padding:8px 11px;background:#F7FAF8;display:flex;flex-direction:column;justify-content:center;font-size:13px;font-weight:900;color:var(--navy);line-height:1.2}
+.tax-pill small{font-size:11px;color:var(--muted);font-weight:800}
+.tax-pill.ok{background:#F5FFF2;border-color:#BBDDB2}.tax-pill.warn{background:#FFF7F0;border-color:#F3C6A5;color:#9A3412}
+.final-price-tax{margin-top:8px;font-size:13px;font-weight:850;color:var(--muted);line-height:1.35}
+.final-offer-row{display:flex;justify-content:flex-end;margin-top:10px}
+.final-offer-btn{border-radius:999px;padding:9px 16px;font-weight:950;font-size:13px;background:transparent;color:rgba(255,255,255,.72);border:1px dashed rgba(255,255,255,.38)}
+.final-offer-btn:hover{color:#fff;border-color:rgba(255,255,255,.7)}
+.final-offer-btn.on{background:#FFF3D1;color:var(--gold2);border:1px solid #E7D59B}
+.investment-row.final-offer-row-line span,.proposal-line.final-offer-line span{font-weight:950}
+
+/* ---------------- Admin ---------------- */
+.admin-card{width:min(1120px,96vw);height:88vh;max-height:88vh}
+.admin-tabs{display:flex;gap:6px;flex-wrap:wrap;padding:12px 18px;background:#F2F6F4;border-bottom:1px solid var(--line)}
+.admin-tabs button{border-radius:999px;padding:9px 14px;font-weight:950;font-size:13px;background:#fff;color:var(--navy);border:1px solid var(--line)}
+.admin-tabs button.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.admin-tabs button .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--gold);margin-left:6px;vertical-align:middle}
+.admin-body{flex:1;overflow:auto;padding:20px 22px 28px;background:#fff}
+.admin-login{max-width:420px;margin:40px auto;text-align:center}
+.admin-login h3{font-size:22px;color:var(--navy);margin:8px 0}
+.admin-login p{color:var(--muted);font-weight:750;line-height:1.4}
+.admin-login input{width:100%;border:1px solid var(--line);border-radius:14px;padding:14px;font-size:16px;text-align:center;margin:12px 0}
+.admin-login .btn{width:100%;padding:14px}
+.admin-error{margin-top:10px;color:var(--danger);font-weight:850;font-size:14px}
+.admin-section{border:1px solid var(--line);border-radius:20px;padding:16px 18px;margin-bottom:16px;background:linear-gradient(180deg,#fff,#FBFDFC)}
+.admin-section h3{margin:0 0 4px;color:var(--navy);font-size:17px}
+.admin-section > p{margin:0 0 12px;color:var(--muted);font-weight:750;font-size:13px;line-height:1.4}
+.admin-fields{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px 14px}
+.admin-fields .field{margin:0}
+.admin-input-wrap{position:relative}
+.admin-input-wrap .unit{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:12px;color:var(--muted);font-weight:900;pointer-events:none}
+.admin-input-wrap .unit.pre{left:12px;right:auto}
+.admin-input-wrap input.has-pre{padding-left:24px}
+.admin-input-wrap input.changed{border-color:var(--gold);background:#FFFCF0}
+.admin-table{width:100%;border-collapse:separate;border-spacing:0;font-size:13px}
+.admin-table th{text-align:left;font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);font-weight:950;padding:8px;border-bottom:1px solid var(--line);position:sticky;top:0;background:#fff;z-index:1}
+.admin-table td{padding:7px 8px;border-bottom:1px solid #EEF2F4;color:var(--navy);font-weight:800;vertical-align:middle}
+.admin-table td.num{text-align:right;font-variant-numeric:tabular-nums}
+.admin-table input[type=text],.admin-table input[type=number],.admin-table select{width:100%;border:1px solid var(--line);border-radius:10px;padding:8px 9px;font-weight:800;background:#fff}
+.admin-table input[type=number]{text-align:right}
+.admin-table input.changed{border-color:var(--gold);background:#FFFCF0}
+.admin-table .locked{color:var(--navy);font-variant-numeric:tabular-nums}
+.admin-table tr.inactive td{opacity:.5}
+.mini-btn{border-radius:999px;padding:7px 11px;font-weight:950;font-size:12px;background:#F2F6F4;color:var(--navy);border:1px solid var(--line)}
+.mini-btn.danger{background:#FFF0F0;color:#A22;border-color:#FFD1D1}
+.mini-btn.green{background:var(--green);color:#fff;border-color:var(--green)}
+.switch{position:relative;display:inline-block;width:40px;height:23px}
+.switch input{opacity:0;width:0;height:0}
+.switch span{position:absolute;inset:0;border-radius:999px;background:#D4DDE3;transition:.15s}
+.switch span::before{content:"";position:absolute;width:17px;height:17px;left:3px;top:3px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.2);transition:.15s}
+.switch input:checked + span{background:var(--green)}
+.switch input:checked + span::before{transform:translateX(17px)}
+.lock-banner{display:flex;gap:12px;align-items:flex-start;border-radius:16px;background:#F2F6F4;border:1px solid var(--line);padding:12px 14px;margin-bottom:14px;font-size:13px;font-weight:800;color:var(--navy);line-height:1.4}
+.lock-banner.replace{background:#FFF8E6;border-color:#EED9A3}
+.lock-banner b{display:block;font-size:14px}
+.lock-banner .btn{margin-left:auto;flex:0 0 auto}
+.preview-card{border-radius:18px;background:var(--navy);color:#fff;padding:14px 16px;display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.preview-card small{display:block;font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:#BFE8B0;font-weight:950}
+.preview-card b{font-size:20px;font-variant-numeric:tabular-nums}
+.preview-card .was{display:block;font-size:11px;color:rgba(255,255,255,.6);font-weight:800}
+.admin-foot{align-items:center}
+.admin-foot .status{font-weight:900;color:var(--navy);font-size:14px}
+.admin-foot .status small{display:block;color:var(--muted);font-weight:800;font-size:12px}
+.admin-foot .status.dirty{color:var(--gold2)}
+.admin-foot .actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+.admin-foot input{border:1px solid var(--line);border-radius:999px;padding:11px 14px;min-width:240px;font-weight:800}
+.admin-foot .btn.secondary,.admin-body .btn.secondary{background:#fff;color:var(--navy);border:1px solid var(--line);box-shadow:none}
+.zip-chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:4px}
+.zip-chip{display:inline-flex;align-items:center;gap:4px;border-radius:999px;background:#F2F6F4;border:1px solid var(--line);padding:3px 4px 3px 9px;font-size:12px;font-weight:850;color:var(--navy)}
+.zip-chip button{width:18px;height:18px;border-radius:50%;background:#fff;color:#A22;font-weight:950;font-size:12px;line-height:1;padding:0}
+.history-row{display:grid;grid-template-columns:70px 1fr auto;gap:12px;align-items:center;padding:11px 0;border-bottom:1px solid #EEF2F4}
+.history-row b{color:var(--navy)}.history-row small{display:block;color:var(--muted);font-weight:800}
+.formula{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;background:#F2F6F4;border-radius:12px;padding:10px 12px;color:var(--navy);line-height:1.6;margin-top:10px}
+@media(max-width:820px){.preview-card{grid-template-columns:repeat(2,1fr)}.admin-foot{flex-direction:column;align-items:stretch}.admin-foot input{min-width:0;width:100%}}
 </style>
   <!-- v10: removed duplicate hero logo from presentation screen; header logo remains. -->
   <!-- v11: compact welcome hero; added value tiles to remove unused green space. -->
@@ -1662,6 +1789,7 @@
   <!-- v56: Offline-first local Store Deal with pending Google Sheets cloud sync. -->
   <!-- v57: Admin-only cloud-backup self-test for Apps Script and Google Sheets wiring. -->
   <!-- v60: Faster rep workflow - session autosave/restore, remembered rep info, one-tap New Deal, instant non-blocking Store Deal with toasts, debounced typing renders, on-demand print sheet, auto cloud sync on launch. -->
+  <!-- v63: Price sheet merged in - Measure & Price from footage, Google Sheets price book with password-protected admin, 2026.02.20 rate card, Decision-Maker Discount, rep-only Cost/Par/commission, NC sales tax by ZIP, Final Offer (cost deal). -->
   <!-- v61: Decision Screen pricing story - starts at crossed-out Retail Price, every discount listed as its own savings line, Total Savings From Retail, emphasized Your Price Today box, and a large Easy Pay monthly box so the math reads top-to-bottom. -->
 </head>
 <body>
@@ -1680,6 +1808,7 @@
         <button class="btn secondary hide-in-presentation" id="loadBtn">Deal Library</button>
         <button class="btn secondary hide-in-presentation" id="printBtn">Print Summary</button>
         <button class="btn gold hidden" id="closeModeQuickBtn">Decision Screen</button>
+        <button class="btn secondary hide-in-presentation hidden" id="adminBtn">Admin</button>
         <button class="btn green" id="presentationBtn">Presentation Mode</button>
       </div>
     </div>
@@ -1692,6 +1821,7 @@
         <div class="section-title"><div><div class="eyebrow">Rep Setup</div><h2>Customer + Option Builder</h2></div></div>
         <div class="row"><div class="field"><label>Customer Name</label><input id="customerName" placeholder="Homeowner"></div><div class="field"><label>Date</label><input id="apptDate" type="date"></div></div>
         <div class="field"><label>Property Address</label><input id="address" placeholder="Norfolk / Hampton Roads"></div>
+        <div class="row"><div class="field"><label>Property ZIP</label><input id="zip" inputmode="numeric" maxlength="5" placeholder="ZIP code"></div><div class="field"><label>Sales Tax</label><div class="tax-pill" id="taxPill">Enter ZIP</div></div></div>
         <div class="row"><div class="field"><label>Customer Phone</label><input id="customerPhone" type="tel" inputmode="tel" placeholder="Phone number"></div><div class="field"><label>Customer Email</label><input id="customerEmail" type="email" placeholder="Email address"></div></div>
         <div class="row"><div class="field"><label>Representative</label><input id="repName" placeholder="Sales Consultant"></div><div class="field"><label>Branch</label><input id="branch" value="Norfolk"></div></div>
         <div class="divider"></div>
@@ -1742,6 +1872,23 @@
       <button class="btn secondary" id="clearSavedDealsBtn">Clear All Saved Deals</button>
       <button class="btn green" id="dealModalDone">Done</button>
     </div>
+  </div>
+</div>
+
+
+<div class="deal-modal hidden" id="adminModal" role="dialog" aria-modal="true" aria-label="Admin pricing controls">
+  <div class="deal-modal-card admin-card">
+    <div class="deal-modal-head">
+      <div>
+        <div class="eyebrow" style="color:#BFE8B0">Admin · Price Book</div>
+        <h2>Pricing Controls</h2>
+        <p id="adminSub">Changes publish to every rep the next time their app opens online.</p>
+      </div>
+      <button class="modal-close" id="adminClose" aria-label="Close admin">×</button>
+    </div>
+    <div class="admin-tabs hidden" id="adminTabs"></div>
+    <div class="admin-body" id="adminBody"></div>
+    <div class="deal-modal-foot admin-foot hidden" id="adminFoot"></div>
   </div>
 </div>
 
@@ -1807,7 +1954,7 @@ const REP_INFO_KEY = 'lf-norfolk-planner-rep-info';
 const WORKING_STATE_KEY = 'lf-norfolk-planner-working-state-v60';
 function savedRepInfo(){try{return JSON.parse(localStorage.getItem(REP_INFO_KEY)||'{}')||{};}catch(e){return {};}}
 function persistRepInfo(){try{localStorage.setItem(REP_INFO_KEY, JSON.stringify({repName:state.repName||'', branch:state.branch||'Norfolk'}));}catch(e){}}
-const defaultState = () => ({customerName:'', customerPhone:'', customerEmail:'', address:'', repName:savedRepInfo().repName||'', branch:savedRepInfo().branch||'Norfolk', apptDate:new Date().toISOString().slice(0,10), activeOption:'B', editOption:'B', selectedOption:'B', view:'investment', focusOption:'B', offerMode:'finance', presentation:false, revealStep:6, referral:{name:'',contact:''}, options:defaultOptions()});
+const defaultState = () => ({customerName:'', customerPhone:'', customerEmail:'', address:'', repName:savedRepInfo().repName||'', branch:savedRepInfo().branch||'Norfolk', apptDate:new Date().toISOString().slice(0,10), activeOption:'B', editOption:'B', selectedOption:'B', view:'investment', focusOption:'B', offerMode:'finance', presentation:false, revealStep:6, referral:{name:'',contact:''}, zip:'', selfGen:false, options:defaultOptions()});
 let state = defaultState();
 const $ = s => document.querySelector(s);
 const money = n => (isFinite(n)?n:0).toLocaleString('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0});
@@ -1840,6 +1987,12 @@ function couponMeta(opt){
   }
 }
 function quickStartMeta(opt){
+  const pbQs = pbQuickStart().find(q=>q.id===(opt.quickStartType || pbQuickStartDefault()));
+  if(pbQs){
+    const t = pbQs.type==='percent' ? 'percent' : pbQs.type==='fixed' ? 'fixed' : 'none';
+    const v = t==='percent' ? Number(pbQs.value)/100 : t==='fixed' ? Number(pbQs.value) : 0;
+    return {label: t==='none' ? 'Quick Start Savings' : `Quick Start Savings (${pbQs.label})`, display: t==='none' ? 'None' : pbQs.label, type:t, value:v};
+  }
   switch(opt.quickStartType || '10p'){
     case 'none': return {label:'Quick Start Savings', display:'None', type:'none', value:0};
     case '5p': return {label:'Quick Start Savings (5%)', display:'5%', type:'percent', value:.05};
@@ -1850,6 +2003,8 @@ function quickStartMeta(opt){
   }
 }
 function quickStartOptions(selected){
+  const list = pbQuickStart();
+  if(list.length){ selected = selected || pbQuickStartDefault(); return list.map(q=>`<option value="${escapeHtml(q.id)}" ${selected===q.id?'selected':''}>${escapeHtml(q.label)}</option>`).join(''); }
   selected = selected || '10p';
   return `<option value="10p" ${selected==='10p'?'selected':''}>10%</option><option value="5p" ${selected==='5p'?'selected':''}>5%</option><option value="750" ${selected==='750'?'selected':''}>$750</option><option value="500" ${selected==='500'?'selected':''}>$500</option><option value="none" ${selected==='none'?'selected':''}>No Quick Start</option>`;
 }
@@ -1858,8 +2013,8 @@ function calcOption(opt){
   let seniorAmt=0, militaryAmt=0, quickAmt=0, couponAmt=0, preferredPaymentAmt=0, flexibleAmt=0;
   // Each discount is rounded to whole dollars as it is applied so every
   // customer-facing screen adds up line-by-line with no $1 rounding drift.
-  if(opt.senior){ seniorAmt = Math.round(running*.05); running -= seniorAmt; }
-  if(opt.military){ militaryAmt = Math.round(running*.05); running -= militaryAmt; }
+  if(opt.senior){ seniorAmt = Math.round(running*pbPct('seniorPct',5)); running -= seniorAmt; }
+  if(opt.military){ militaryAmt = Math.round(running*pbPct('militaryPct',5)); running -= militaryAmt; }
   const oneYear = running;
 
   const qm = quickStartMeta(opt);
@@ -1870,11 +2025,21 @@ function calcOption(opt){
   if(cm.type==='percent'){ couponAmt = Math.round(running*cm.value); running -= couponAmt; }
   if(cm.type==='fixed'){ couponAmt = Math.min(running, cm.value); running -= couponAmt; }
 
+  // Decision-Maker Discount: everyone who decides on the home is at the table
+  // (a homeowner who decides alone qualifies). Fixed amount set by admin.
+  let dmAmt = 0;
+  if(opt.decisionMaker){ dmAmt = Math.min(running, Math.round(Number(pb('discounts.decisionMaker',500))||0)); running -= dmAmt; }
+
   // Preferred Payment Savings is a fixed 3% optional incentive applied after coupon.
-  if(opt.preferredPaymentSavings){ preferredPaymentAmt = Math.round(running*.03); running -= preferredPaymentAmt; }
+  if(opt.preferredPaymentSavings){ preferredPaymentAmt = Math.round(running*pbPct('preferredPaymentPct',3)); running -= preferredPaymentAmt; }
 
   // Flexible Installation Discount is applied after same-day savings and before final payment views.
-  if(opt.flexibleInstall){ flexibleAmt = Math.round(running*.08); running -= flexibleAmt; }
+  if(opt.flexibleInstall){ flexibleAmt = Math.round(running*pbPct('flexibleInstallPct',8)); running -= flexibleAmt; }
+
+  // Final Offer (cost deal): last option presented before leaving the home.
+  let finalOfferAmt = 0;
+  const finalOfferTarget = finalOfferPrice(opt);
+  if(opt.finalOffer && finalOfferTarget>0 && finalOfferTarget<running){ finalOfferAmt = running - finalOfferTarget; running = finalOfferTarget; }
 
   // Final customer-facing pricing. One-Year Price is protected after Senior
   // and Military savings; Your Price Today also includes same-day savings.
@@ -1893,7 +2058,7 @@ function calcOption(opt){
   monthly = monthly>0 ? Math.ceil(monthly) : 0;
 
   return {
-    retail, seniorAmt, militaryAmt, oneYear, quickAmt, couponAmt, preferredPaymentAmt, flexibleAmt,
+    retail, seniorAmt, militaryAmt, oneYear, quickAmt, couponAmt, dmAmt, preferredPaymentAmt, flexibleAmt, finalOfferAmt,
     yourPrice, cardPrice, cardAdjustmentAmt, checkPrice,
     financedPrice, plan, financedWithFees, monthly,
     totalSavingsFinance:retail-cardPrice,
@@ -1947,7 +2112,7 @@ function displayPaymentValueHtml(opt,c){
 function displayPaymentValuePlain(opt,c){
   return optionHasPrice(opt) ? selectedPaymentValuePlain(c) : priceNotEnteredPlain();
 }
-function setBaseInputs(){['customerName','customerPhone','customerEmail','address','repName','branch','apptDate'].forEach(id=>{const el=$('#'+id); if(!el) return; if(document.activeElement!==el) el.value=state[id]||''; el.oninput=()=>{state[id]=el.value; if(id==='repName'||id==='branch') persistRepInfo(); renderHeaderInfo(); scheduleMainView(); schedulePrintSheet(); scheduleAutosave();};});}
+function setBaseInputs(){['customerName','customerPhone','customerEmail','address','zip','repName','branch','apptDate'].forEach(id=>{const el=$('#'+id); if(!el) return; if(document.activeElement!==el) el.value=state[id]||''; el.oninput=()=>{state[id]=el.value; if(id==='repName'||id==='branch') persistRepInfo(); if(id==='zip'){renderTaxPill(); refreshEditorCalculations(false);} renderHeaderInfo(); scheduleMainView(); schedulePrintSheet(); scheduleAutosave();};});}
 
 let mainViewTimer=null, autosaveTimer=null, printSheetDirty=true;
 function scheduleMainView(){clearTimeout(mainViewTimer); mainViewTimer=setTimeout(()=>renderMainView(),140);}
@@ -2009,11 +2174,14 @@ function editorPriceBuildHtml(opt){
     <div class="calc-row"><strong>One-Year Price</strong><strong>${money(c.oneYear)}</strong></div>
     <div class="calc-row"><span>${escapeHtml(c.quickStartLabel)}</span><span class="minus">-${money(c.quickAmt)}</span></div>
     <div class="calc-row"><span>${escapeHtml(c.couponLabel)}</span><span class="minus">-${money(c.couponAmt)}</span></div>
+    ${c.dmAmt>0?`<div class="calc-row"><span>Decision-Maker Savings</span><span class="minus">-${money(c.dmAmt)}</span></div>`:''}
     ${opt.preferredPaymentSavings?`<div class="calc-row"><span>Preferred Payment Savings (3%)</span><span class="minus">-${money(c.preferredPaymentAmt)}</span></div>`:''}
     ${opt.flexibleInstall?`<div class="calc-row"><span>Flexible Installation Savings</span><span class="minus">-${money(c.flexibleAmt)}</span></div>`:''}
+    ${c.finalOfferAmt>0?`<div class="calc-row"><span>Final Offer Savings</span><span class="minus">-${money(c.finalOfferAmt)}</span></div>`:''}
     <div class="calc-row"><strong>Internal Finance Base</strong><strong>${money(c.checkPrice)}</strong></div>
     <div class="calc-row"><strong>Your Price Today</strong><strong>${money(c.cardPrice)}</strong></div>
     <div class="calc-row"><span>Easy Pay Estimate</span><strong>${money(c.monthly)}/mo</strong></div>
+    ${taxRowsHtml(c.cardPrice)}
     <div class="calc-total"><span>Current View: ${paymentModeLabel()}</span><b>${selectedPaymentValueHtml(c)}</b></div>
   </div>`;
 }
@@ -2022,6 +2190,9 @@ function refreshEditorCalculations(immediate=true){
   if(!opt) return;
   const summary = $('#priceBuildSummary');
   if(summary) summary.innerHTML = editorPriceBuildHtml(opt);
+  const mr = $('#measureResult'); if(mr) mr.innerHTML = measureResultHtml(opt);
+  const rn = $('#repNumbers'); if(rn){ rn.innerHTML = repNumbersHtml(opt); bindRepNumbers(opt); }
+  const rs = $('#retailSource'); if(rs){ rs.innerHTML = retailSourceHtml(opt); bindRetailSource(opt); }
   const help = $('#planHelp');
   if(help){
     const c = calcOption(opt);
@@ -2046,24 +2217,32 @@ function renderOptionEditor(){
     <div class="editor-status">Currently editing: <strong>Option ${edit}</strong></div>
     <div class="field"><label>Option Name</label><input id="optName" value="${escapeHtml(opt.name)}"></div>
     <div class="field"><label>Customer-Facing Badge</label><input id="optBadge" value="${escapeHtml(opt.badge)}"></div>
-    <div class="field"><label>Products Included</label><div class="product-check">${productCatalog.map(p=>`<label class="check" title="${escapeHtml(productHelp[p]||'')}"><input type="checkbox" class="prodCheck" value="${escapeHtml(p)}" ${opt.products.includes(p)?'checked':''}> <span class="icon">${escapeHtml(productIcons[p]||'AD')}</span> ${escapeHtml(p)}</label>`).join('')}</div><div class="help">Product selections are display-only. Final pricing still comes from the internal Google pricing sheet.</div></div>
+    <div class="field"><label>Products Included</label><div class="product-check">${productCatalog.map(p=>`<label class="check" title="${escapeHtml(productHelp[p]||'')}"><input type="checkbox" class="prodCheck" value="${escapeHtml(p)}" ${opt.products.includes(p)?'checked':''}> <span class="icon">${escapeHtml(productIcons[p]||'AD')}</span> ${escapeHtml(p)}</label>`).join('')}</div><div class="help">Product selections are display-only. Price comes from Measure &amp; Price below.</div></div>
     <div class="field"><label>Professional Custom Product / Add-On</label><input id="customProduct" value="${escapeHtml(opt.customProduct||'')}" placeholder="Example: Specialty roofline work included"><div class="help">Use this for unusual job-specific work. Keep the wording customer-friendly because it can appear in Presentation Mode and on the Decision Screen.</div></div>
     <div class="field"><label>Scope / Presentation Notes</label><textarea id="optNotes">${escapeHtml(opt.notes||'')}</textarea></div>
-    <div class="field"><label>Retail Price from Internal Sheet</label><input id="retail" type="number" inputmode="decimal" min="0" step="1" value="${opt.retail||''}" placeholder="Enter retail price"></div>
-    <div class="row"><label class="check"><input type="checkbox" id="senior" ${opt.senior?'checked':''}> Senior 5%</label><label class="check"><input type="checkbox" id="military" ${opt.military?'checked':''}> Military 5%</label></div>
+    ${measureCardHtml(opt)}
+    <div class="field"><label>Retail Price (Opening)</label><input id="retail" type="number" inputmode="decimal" min="0" step="1" value="${opt.retail||''}" placeholder="Enter retail price"><div class="retail-source" id="retailSource">${retailSourceHtml(opt)}</div></div>
+    <div class="row"><label class="check"><input type="checkbox" id="senior" ${opt.senior?'checked':''}> Senior ${pb('discounts.seniorPct',5)}%</label><label class="check"><input type="checkbox" id="military" ${opt.military?'checked':''}> Military ${pb('discounts.militaryPct',5)}%</label></div>
     <div class="help live-price-help">Pricing updates live in the Live Price Build summary below.</div>
     <div class="field"><label>Quick Start Savings</label><select id="quickStartType">${quickStartOptions(opt.quickStartType || '10p')}</select></div>
     <div class="row"><div class="field"><label>Coupon</label><select id="couponType"><option value="none" ${opt.couponType==='none'?'selected':''}>None</option><option value="15p" ${opt.couponType==='15p'?'selected':''}>15%</option><option value="25p" ${opt.couponType==='25p'?'selected':''}>25%</option><option value="250" ${opt.couponType==='250'?'selected':''}>$250</option><option value="500" ${opt.couponType==='500'?'selected':''}>$500</option><option value="customP" ${opt.couponType==='customP'?'selected':''}>Custom %</option><option value="customD" ${opt.couponType==='customD'?'selected':''}>Custom $</option></select></div><div class="field"><label>Custom Coupon</label><input id="couponCustom" type="number" inputmode="decimal" min="0" step=".01" value="${opt.couponCustom||''}" placeholder="For custom only"></div></div>
-    <label class="check flexible-install-control"><input type="checkbox" id="preferredPaymentSavings" ${opt.preferredPaymentSavings?'checked':''}> Preferred Payment Savings (3%)</label>
+    <label class="check flexible-install-control"><input type="checkbox" id="decisionMaker" ${opt.decisionMaker?'checked':''}> Decision-Maker Discount (${money(Number(pb('discounts.decisionMaker',500)))})</label>
+    <div class="help rep-only">Everyone who decides on the home is at the table. A homeowner who decides alone qualifies.</div>
+    <label class="check flexible-install-control"><input type="checkbox" id="preferredPaymentSavings" ${opt.preferredPaymentSavings?'checked':''}> Preferred Payment Savings (${pb('discounts.preferredPaymentPct',3)}%)</label>
     <label class="check flexible-install-control"><input type="checkbox" id="flexibleInstall" ${opt.flexibleInstall?'checked':''}> Flexible Installation Discount</label>
     <div class="help rep-only">Use only when the homeowner can allow installation scheduling flexibility around timing, production availability, or route optimization. Customer must be able to accept installation on any available installation day within the next 10 days to qualify.</div>
     <div class="field"><label>Financing Plan</label><select id="planId">${planOptions(opt.planId)}</select><div class="help rep-only" id="planHelp">${escapeHtml(c.plan.detail)} Divide factor: ${Number(c.plan.divide).toFixed(4)} · Easy Pay uses internal finance base ${money(c.checkPrice)} divided by the factor.</div></div>
-    <div id="priceBuildSummary">${editorPriceBuildHtml(opt)}</div>`;
+    <div id="priceBuildSummary">${editorPriceBuildHtml(opt)}</div>
+    <div id="repNumbers" class="rep-numbers">${repNumbersHtml(opt)}</div>`;
   $('#optName').oninput=e=>updateEditorState(()=>{opt.name=e.target.value}, false);
   $('#optBadge').oninput=e=>updateEditorState(()=>{opt.badge=e.target.value}, false);
   $('#optNotes').oninput=e=>updateEditorState(()=>{opt.notes=e.target.value}, false);
   $('#customProduct').oninput=e=>updateEditorState(()=>{opt.customProduct=e.target.value}, false);
-  $('#retail').oninput=e=>updateEditorState(()=>{opt.retail=clamp(e.target.value)}, false);
+  $('#retail').oninput=e=>updateEditorState(()=>{opt.retail=clamp(e.target.value); const b=priceBuild(opt); opt.retailSource = (b && opt.retail===b.opening) ? 'calc' : 'manual';}, false);
+  bindMeasureInputs(opt);
+  bindRepNumbers(opt);
+  bindRetailSource(opt);
+  $('#decisionMaker').onchange=e=>updateEditorState(()=>{opt.decisionMaker=e.target.checked});
   $('#senior').onchange=e=>updateEditorState(()=>{opt.senior=e.target.checked});
   $('#military').onchange=e=>updateEditorState(()=>{opt.military=e.target.checked});
   $('#quickStartType').onchange=e=>updateEditorState(()=>{opt.quickStartType=e.target.value});
@@ -2074,7 +2253,7 @@ function renderOptionEditor(){
   $('#planId').onchange=e=>updateEditorState(()=>{opt.planId=e.target.value});
   document.querySelectorAll('.prodCheck').forEach(cb=>cb.onchange=()=>updateEditorState(()=>{opt.products=Array.from(document.querySelectorAll('.prodCheck:checked')).map(x=>x.value)}));
   ['A','B','C'].forEach(k=>{$('#copyTo'+k).disabled = k===edit; $('#copyTo'+k).onclick=()=>{if(k!==edit){const src=copyObj(state.options[edit]); src.key=k; src.label='Option '+k; state.options[k]=src; render();}}});
-  $('#applyToAll').onclick=()=>{['A','B','C'].forEach(k=>{if(k!==edit){state.options[k].senior=opt.senior; state.options[k].military=opt.military; state.options[k].quickStartType=opt.quickStartType; state.options[k].couponType=opt.couponType; state.options[k].couponCustom=opt.couponCustom; state.options[k].preferredPaymentSavings=opt.preferredPaymentSavings; state.options[k].flexibleInstall=opt.flexibleInstall; state.options[k].planId=opt.planId;}}); render();};
+  $('#applyToAll').onclick=()=>{['A','B','C'].forEach(k=>{if(k!==edit){state.options[k].senior=opt.senior; state.options[k].military=opt.military; state.options[k].quickStartType=opt.quickStartType; state.options[k].couponType=opt.couponType; state.options[k].couponCustom=opt.couponCustom; state.options[k].preferredPaymentSavings=opt.preferredPaymentSavings; state.options[k].decisionMaker=opt.decisionMaker; state.options[k].flexibleInstall=opt.flexibleInstall; state.options[k].planId=opt.planId;}}); render();};
   $('#resetOpt').onclick=()=>{state.options[edit]=copyObj(defaultOptions()[edit]); render();};
   $('#lowestPlan').onclick=()=>{opt.planId=findLowestPlan(opt).id; render();};
 }
@@ -2111,7 +2290,7 @@ function optionCard(k, mode='payment'){
   }
   return `<article class="option-card${featured}${selected}" data-select="${k}"><div class="option-top"><div class="option-title"><small>${escapeHtml(opt.label)}</small><h3>${escapeHtml(opt.name)}</h3></div><div class="${badgeClass}">${escapeHtml(opt.badge)}</div></div><div class="product-list">${productListHtml(opt, state.presentation, 8)}</div><p class="muted" style="line-height:1.45;margin:0 0 12px;font-size:14px">${escapeHtml(opt.notes||'')}</p>${block}<button class="choice-btn" data-select="${k}">Select ${escapeHtml(opt.label)}</button></article>`;
 }
-function savingsMini(opt,c){if(!optionHasPrice(opt)) return `<div class="price-focus blue price-missing-card"><div class="label">Pricing Needed</div><div class="big">${priceNotEnteredHtml()}</div><div class="subline">Enter Retail Price in Rep Setup.</div></div>`; const amt=selectedOfferAmount(c); const totalSavings = c.retail - amt; return `<div class="price-focus blue"><div class="money-line"><span>Retail</span><b>${money(c.retail)}</b></div><div class="money-line"><span>One-Year Price</span><b>${money(c.oneYear)}</b></div>${c.quickAmt>0?`<div class="money-line"><span>Quick Start</span><b class="green-text">-${money(c.quickAmt)}</b></div>`:''}${c.couponAmt>0?`<div class="money-line"><span>Coupon</span><b class="green-text">-${money(c.couponAmt)}</b></div>`:''}${opt.preferredPaymentSavings?`<div class="money-line"><span>Preferred Payment Savings</span><b class="green-text">-${money(c.preferredPaymentAmt)}</b></div>`:''}${opt.flexibleInstall?`<div class="money-line"><span>Flexible Installation Savings</span><b class="green-text">-${money(c.flexibleAmt)}</b></div>`:''}<div class="money-line"><span>${todayPriceLabel()}</span><b>${money(amt)}</b></div><div class="money-line"><span>Total Savings</span><b class="green-text">${money(totalSavings)}</b></div><div class="money-line"><span>${paymentModeLabel()}</span><b>${selectedPaymentValuePlain(c)}</b></div></div>`;}
+function savingsMini(opt,c){if(!optionHasPrice(opt)) return `<div class="price-focus blue price-missing-card"><div class="label">Pricing Needed</div><div class="big">${priceNotEnteredHtml()}</div><div class="subline">Enter Retail Price in Rep Setup.</div></div>`; const amt=selectedOfferAmount(c); const totalSavings = c.retail - amt; return `<div class="price-focus blue"><div class="money-line"><span>Retail</span><b>${money(c.retail)}</b></div><div class="money-line"><span>One-Year Price</span><b>${money(c.oneYear)}</b></div>${c.quickAmt>0?`<div class="money-line"><span>Quick Start</span><b class="green-text">-${money(c.quickAmt)}</b></div>`:''}${c.couponAmt>0?`<div class="money-line"><span>Coupon</span><b class="green-text">-${money(c.couponAmt)}</b></div>`:''}${c.dmAmt>0?`<div class="money-line"><span>Decision-Maker Savings</span><b class="green-text">-${money(c.dmAmt)}</b></div>`:''}${c.finalOfferAmt>0?`<div class="money-line"><span>Final Offer Savings</span><b class="green-text">-${money(c.finalOfferAmt)}</b></div>`:''}${opt.preferredPaymentSavings?`<div class="money-line"><span>Preferred Payment Savings</span><b class="green-text">-${money(c.preferredPaymentAmt)}</b></div>`:''}${opt.flexibleInstall?`<div class="money-line"><span>Flexible Installation Savings</span><b class="green-text">-${money(c.flexibleAmt)}</b></div>`:''}<div class="money-line"><span>${todayPriceLabel()}</span><b>${money(amt)}</b></div><div class="money-line"><span>Total Savings</span><b class="green-text">${money(totalSavings)}</b></div><div class="money-line"><span>${paymentModeLabel()}</span><b>${selectedPaymentValuePlain(c)}</b></div></div>`;}
 function bindSelection(){document.querySelectorAll('[data-select]').forEach(el=>el.onclick=e=>{const k=e.currentTarget.dataset.select; state.selectedOption=k; state.activeOption=k; state.view='financing'; render();});}
 function renderMainView(){
   const keys = visibleKeys();
@@ -2167,7 +2346,9 @@ function savingsView(){
   if(c.quickAmt>0) steps.push([c.quickStartLabel,c.quickAmt,'-']);
   if(c.couponAmt>0) steps.push([c.couponLabel,c.couponAmt,'-']);
   if(opt.preferredPaymentSavings) steps.push(['Preferred Payment Savings',c.preferredPaymentAmt,'-']);
+  if(c.dmAmt>0) steps.push(['Decision-Maker Savings',c.dmAmt,'-']);
   if(opt.flexibleInstall) steps.push(['Flexible Installation Savings',c.flexibleAmt,'-']);
+  if(c.finalOfferAmt>0) steps.push(['Final Offer Savings',c.finalOfferAmt,'-']);
   steps.push([todayPriceLabel(),selectedOfferAmount(c),'']);
   const finalAmount = selectedOfferAmount(c);
   const totalSavings = Math.max(0,c.retail-finalAmount);
@@ -2202,7 +2383,9 @@ function projectInvestmentView(){
   if(c.quickAmt>0) todayRows.push(priceBuildRow('Quick Start Savings', `-${money(c.quickAmt)}`, 'savings'));
   if(c.couponAmt>0) todayRows.push(priceBuildRow('Coupon Savings', `-${money(c.couponAmt)}`, 'savings'));
   if(opt.preferredPaymentSavings && c.preferredPaymentAmt>0) todayRows.push(priceBuildRow('Preferred Payment Savings', `-${money(c.preferredPaymentAmt)}`, 'savings'));
+  if(c.dmAmt>0) todayRows.push(priceBuildRow('Decision-Maker Savings', `-${money(c.dmAmt)}`, 'savings'));
   if(opt.flexibleInstall && c.flexibleAmt>0) todayRows.push(priceBuildRow('Flexible Installation Savings', `-${money(c.flexibleAmt)}`, 'savings'));
+  if(c.finalOfferAmt>0) todayRows.push(priceBuildRow('Final Offer Savings', `-${money(c.finalOfferAmt)}`, 'savings'));
   todayRows.push(priceBuildRow('Your Price Today', money(c.cardPrice)));
 
   const badge = hasLeafFilter(opt) ? `<div class="project-pill">Never Clean OUT Your Gutters Again</div>` : '';
@@ -2417,12 +2600,14 @@ function decisionSummaryView(k){
   const disclaimer = enduraLastDisclaimer(opt);
   const savingsRows = hasPrice ? `
           <div class="investment-subhead">Your Savings Today</div>
-          ${c.seniorAmt>0?`<div class="investment-row save-row"><span>Senior Discount (5%)</span><strong>-${money(c.seniorAmt)}</strong></div>`:''}
-          ${c.militaryAmt>0?`<div class="investment-row save-row"><span>Military Discount (5%)</span><strong>-${money(c.militaryAmt)}</strong></div>`:''}
+          ${c.seniorAmt>0?`<div class="investment-row save-row"><span>Senior Discount (${pb('discounts.seniorPct',5)}%)</span><strong>-${money(c.seniorAmt)}</strong></div>`:''}
+          ${c.militaryAmt>0?`<div class="investment-row save-row"><span>Military Discount (${pb('discounts.militaryPct',5)}%)</span><strong>-${money(c.militaryAmt)}</strong></div>`:''}
           ${c.quickAmt>0?`<div class="investment-row save-row"><span>Quick Start Savings</span><strong>-${money(c.quickAmt)}</strong></div>`:''}
           ${c.couponAmt>0?`<div class="investment-row save-row"><span>${escapeHtml(c.couponLabel)}</span><strong>-${money(c.couponAmt)}</strong></div>`:''}
           ${opt.preferredPaymentSavings?`<div class="investment-row save-row"><span>Preferred Payment Savings</span><strong>-${money(c.preferredPaymentAmt)}</strong></div>`:''}
+          ${c.dmAmt>0?`<div class="investment-row save-row"><span>Decision-Maker Savings</span><strong>-${money(c.dmAmt)}</strong></div>`:''}
           ${opt.flexibleInstall?`<div class="investment-row save-row"><span>Flexible Installation Savings</span><strong>-${money(c.flexibleAmt)}</strong></div>`:''}
+          ${c.finalOfferAmt>0?`<div class="investment-row save-row final-offer-row-line"><span>Final Offer Savings</span><strong>-${money(c.finalOfferAmt)}</strong></div>`:''}
           <div class="investment-row total-row"><span>Total Savings From Retail</span><strong>${money(todaySavings)}</strong></div>` : `
           <div class="investment-subhead">Your Savings Today</div>
           <div class="investment-row total-row"><span>Status</span><strong>${priceNotEnteredPlain()}</strong></div>`;
@@ -2445,6 +2630,7 @@ function decisionSummaryView(k){
             <div class="final-price-kicker">${escapeHtml(finalPriceLabel)}</div>
             <div class="final-price-number">${escapeHtml(finalPriceValue)}</div>
             <div class="final-price-sub">Final discounted project price.</div>
+            ${hasPrice?taxSublineHtml(c.cardPrice):''}
           </div>
           <div class="final-split-divider"></div>
           <div class="final-split-panel easy-pay-panel">
@@ -2465,6 +2651,7 @@ function decisionSummaryView(k){
           <div class="investment-row retail-row"><span>Retail Price</span><strong>${hasPrice?money(c.retail):priceNotEnteredPlain()}</strong></div>
           ${savingsRows}
           <button class="decision-cta" data-select="${k}">Select ${escapeHtml(opt.label)}</button>
+          ${finalOfferControlHtml(k)}
         </div>
       </div>
     </div>
@@ -2590,9 +2777,12 @@ function renderPrintSheet(){
     ${c.quickAmt>0?`<div class="proposal-line"><span>Quick Start Savings</span><b class="save">-${money(c.quickAmt)}</b></div>`:''}
     ${c.couponAmt>0?`<div class="proposal-line"><span>${escapeHtml(c.couponLabel)}</span><b class="save">-${money(c.couponAmt)}</b></div>`:''}
     ${opt.preferredPaymentSavings?`<div class="proposal-line"><span>Preferred Payment Savings</span><b class="save">-${money(c.preferredPaymentAmt)}</b></div>`:''}
+    ${c.dmAmt>0?`<div class="proposal-line"><span>Decision-Maker Savings</span><b class="save">-${money(c.dmAmt)}</b></div>`:''}
     ${opt.flexibleInstall?`<div class="proposal-line"><span>Flexible Installation Savings</span><b class="save">-${money(c.flexibleAmt)}</b></div>`:''}
+    ${c.finalOfferAmt>0?`<div class="proposal-line final-offer-line"><span>Final Offer Savings</span><b class="save">-${money(c.finalOfferAmt)}</b></div>`:''}
     <div class="proposal-line total-savings"><span>Total Savings From Retail</span><b>${money(todaySavings)}</b></div>
     <div class="proposal-line your-price-row"><span>${escapeHtml(finalPriceLabel)}</span><b>${escapeHtml(finalPriceValue)}</b></div>
+    ${proposalTaxLineHtml(c.cardPrice)}
     <div class="proposal-line selected-payment-line"><span>Selected Payment View</span><b>${escapeHtml(paymentLabel)} · ${escapeHtml(paymentValue)}</b></div>` : `
     <div class="proposal-line selected-payment-line"><span>Status</span><b>${priceNotEnteredPlain()}</b></div>`;
 
@@ -3138,7 +3328,7 @@ function renderSavedDeals(){
     renderSavedDeals();
   });
 }
-function bindPostRender(){const rn=$('#revealNext'); if(rn) rn.onclick=()=>{state.revealStep=Math.min(6,state.revealStep+1); render(false)}; const rb=$('#revealBack'); if(rb) rb.onclick=()=>{state.revealStep=Math.max(0,state.revealStep-1); render(false)}; const ps=$('#printSelected'); if(ps) ps.onclick=()=>{ensurePrintSheet(); window.print();};}
+function bindPostRender(){const rn=$('#revealNext'); if(rn) rn.onclick=()=>{state.revealStep=Math.min(6,state.revealStep+1); render(false)}; const rb=$('#revealBack'); if(rb) rb.onclick=()=>{state.revealStep=Math.max(0,state.revealStep-1); render(false)}; const ps=$('#printSelected'); if(ps) ps.onclick=()=>{ensurePrintSheet(); window.print();}; document.querySelectorAll('[data-final-offer]').forEach(b=>b.onclick=()=>{const o=state.options[b.dataset.finalOffer]; if(!o) return; o.finalOffer=!o.finalOffer; render();});}
 $('#presentationBtn').onclick=async()=>{state.presentation=!state.presentation; if(state.presentation){const focused = state.selectedOption || state.activeOption || state.editOption || 'B'; state.view='investment'; state.focusOption=focused; state.activeOption=focused; state.selectedOption=focused; state.offerMode='finance'; try{await document.documentElement.requestFullscreen?.()}catch(e){}} else {try{await document.exitFullscreen?.()}catch(e){}} render();};
 $('#closeModeQuickBtn').onclick=()=>{state.view='decision'; render(false)};
 $('#saveBtn').onclick=()=>saveCurrentDeal();
@@ -3170,7 +3360,7 @@ window.addEventListener('appinstalled',()=>{
   offlineSupportReady = true;
   updateConnectionStatus();
 });
-window.addEventListener('online',()=>{updateConnectionStatus(); syncPendingCloudDeals(false);});
+window.addEventListener('online',()=>{updateConnectionStatus(); syncPendingCloudDeals(false); syncPriceBook(true);});
 window.addEventListener('offline',()=>updateConnectionStatus());
 window.addEventListener('keydown',e=>{if(e.key==='Escape'&&state.presentation){state.presentation=false; render();}});
 // One-time setup: opening the hosted app with ?backup=<Apps Script /exec URL> stores the
@@ -3183,9 +3373,620 @@ window.addEventListener('keydown',e=>{if(e.key==='Escape'&&state.presentation){s
     }
   }catch(e){}
 })();
+/* =====================================================================
+ * v63 PRICE BOOK MERGE
+ * Prices, cost/Par rules, discounts, commission rules, the rate card, and
+ * NC sales tax come from the "App Price Book" tab in Google Sheets. Nothing
+ * internal is written into this public file: the app downloads the price
+ * book when online and keeps a copy on the device for offline use.
+ * ===================================================================== */
+const PRICEBOOK_KEY = 'lf-norfolk-pricebook-v1';
+const PRICEBOOK_SYNCED_KEY = 'lf-norfolk-pricebook-synced';
+const TEAM_CODE_KEY = 'lf-norfolk-team-code';
+const ADMIN_DEVICE_KEY = 'lf-norfolk-admin-device';
+const BASE_FINANCE_PLANS = financePlans.slice();
+let priceBook = null;
+try { priceBook = JSON.parse(localStorage.getItem(PRICEBOOK_KEY) || 'null'); } catch (e) { priceBook = null; }
+
+function pathGet(obj, path){ return String(path).split('.').reduce((o,k)=>o==null?undefined:o[k], obj); }
+function pb(path, fallback){ const v = pathGet(priceBook, path); return (v===undefined || v===null || v==='') ? fallback : v; }
+function pbPct(key, fallback){ return (Number(pb('discounts.'+key, fallback)) || 0) / 100; }
+function pbQuickStart(){ const l = pb('discounts.quickStart', null); return Array.isArray(l) ? l : []; }
+function pbQuickStartDefault(){ return pb('discounts.quickStartDefault', '10p'); }
+function teamCode(){ try { return localStorage.getItem(TEAM_CODE_KEY) || ''; } catch (e) { return ''; } }
+
+function applyPriceBookPlans(){
+  const plans = pb('rateCard.plans', null);
+  const custom = BASE_FINANCE_PLANS.find(p=>p.id==='CUSTOM');
+  const next = Array.isArray(plans) && plans.length
+    ? plans.filter(p=>p.active!==false).map(p=>Object.assign({}, p, {label: p.label + (p.minAmount ? ` (${money(p.minAmount)}+ jobs)` : '')}))
+    : BASE_FINANCE_PLANS.filter(p=>p.id!=='CUSTOM');
+  financePlans.splice(0, financePlans.length, ...next, ...(custom ? [custom] : []));
+}
+applyPriceBookPlans();
+
+function setPriceBook(book, rerender=true){
+  priceBook = book;
+  try {
+    localStorage.setItem(PRICEBOOK_KEY, JSON.stringify(book));
+    localStorage.setItem(PRICEBOOK_SYNCED_KEY, new Date().toISOString());
+  } catch (e) {}
+  applyPriceBookPlans();
+  if (rerender) render();
+}
+
+function priceBookRequest(action, payload){
+  payload = payload || {};
+  return new Promise((resolve, reject)=>{
+    if (googleCloudSaveAvailable()) {
+      const args = {
+        getPriceBook: [payload.teamCode],
+        adminLogin: [payload.password],
+        savePriceBook: [payload.password, payload.priceBook, payload.note],
+        priceBookHistory: [payload.password],
+        restorePriceBook: [payload.password, payload.version]
+      }[action];
+      google.script.run.withSuccessHandler(resolve).withFailureHandler(reject)[action](...args);
+      return;
+    }
+    const endpoint = staticCloudBackupUrl();
+    if (!endpoint) return reject(new Error('This device is not connected to Google Sheets yet. Open the team setup link once while online.'));
+    fetch(endpoint, {method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body: JSON.stringify(Object.assign({action}, payload))})
+      .then(r=>r.json()).then(resolve).catch(reject);
+  });
+}
+
+async function syncPriceBook(announce=true){
+  if (!navigator.onLine || !cloudSaveAvailable()) return;
+  try {
+    const res = await priceBookRequest('getPriceBook', {teamCode: teamCode()});
+    if (res && res.success && res.priceBook) {
+      const changed = !priceBook || priceBook.version !== res.priceBook.version;
+      setPriceBook(res.priceBook, changed);
+      if (changed && announce) showToast(`Prices updated · version ${res.priceBook.version}`);
+    } else if (res && res.code === 'team') {
+      showToast('Prices need the team setup link on this device.', 'warn');
+    }
+  } catch (e) {}
+}
+
+function priceBookStatus(){
+  if (!priceBook) return {cls:'warn', text:'Prices not loaded'};
+  let synced = '';
+  try { synced = localStorage.getItem(PRICEBOOK_SYNCED_KEY) || ''; } catch (e) {}
+  const days = synced ? Math.floor((Date.now() - Date.parse(synced)) / 864e5) : 99;
+  const when = days <= 0 ? 'today' : days === 1 ? 'yesterday' : `${days} days ago`;
+  return {cls: days > 14 ? 'warn' : '', text: `Prices v${priceBook.version || 0} · synced ${when}`};
+}
+
+/* ---------------------------------------------------------------- Measure & Price */
+function measureOf(opt){ opt.measure = opt.measure || {}; opt.measure.extras = opt.measure.extras || {}; return opt.measure; }
+
+function priceBuild(opt, book){
+  book = book || priceBook;
+  if (!book || !book.pricing || !opt) return null;
+  const m = opt.measure || {}, P = book.pricing, R = P.retailPerFt || {};
+  const ex = m.extras || {};
+  const gutter = clamp(m.gutterFt) * Number(R.gutterDs || 0);
+  const lf = clamp(m.lf1) * Number(R.lf1 || 0) + clamp(m.lf2) * Number(R.lf2 || 0) + clamp(m.lf3) * Number(R.lf3 || 0);
+  const vm = (clamp(m.vm1) + clamp(m.vm2) + clamp(m.vm3)) * Number(R.versaMax || 0);
+  const extras = (P.extras || []).reduce((sum, x)=>sum + clamp(ex[x.name]) * Number(x.price || 0), 0);
+  const items = gutter + lf + vm + extras;
+  if (items <= 0) return null;
+  const retail100 = items + Number(P.jobAdd || 0);
+  const cost = clamp(m.gutterFt) * Number(P.gutterCostPerFt || 0) + (lf + vm + extras) / (Number(P.costDivisor) || 1);
+  const parAdd = Number(P.parAdd || 0);
+  const par = (Number(P.parPct || 0) / 100) * (retail100 - parAdd) + parAdd;
+  return {
+    items: Math.round(items),
+    retail100: Math.round(retail100),
+    cost: Math.round(cost),
+    par: Math.round(par),
+    truePar: par - parAdd,
+    opening: Math.round(retail100 * (Number(P.openingMultiplier) || 1)),
+    belowMinimum: items < Number(P.jobMinimum || 0)
+  };
+}
+
+function finalOfferPrice(opt){ const b = priceBuild(opt); return b ? b.cost : 0; }
+
+function measureInput(label, key, value){
+  return `<div class="field"><label>${label}</label><input type="number" inputmode="decimal" min="0" step="1" data-measure="${key}" value="${value || ''}" placeholder="0"></div>`;
+}
+
+function measureCardHtml(opt){
+  const st = priceBookStatus();
+  if (!priceBook || !priceBook.pricing) {
+    return `<div class="measure-card"><div class="measure-head"><div><div class="eyebrow">Measure &amp; Price</div><h3>Footage → Retail</h3></div><span class="pb-pill warn">${st.text}</span></div>
+      <div class="measure-empty">Open the team setup link once while online to load prices from Google Sheets. Until then, type the retail price below.</div></div>`;
+  }
+  const m = measureOf(opt);
+  const extras = priceBook.pricing.extras || [];
+  const extrasCount = extras.filter(x=>clamp(m.extras[x.name]) > 0).length;
+  const R = priceBook.pricing.retailPerFt || {};
+  return `<div class="measure-card">
+    <div class="measure-head"><div><div class="eyebrow">Measure &amp; Price</div><h3>Footage → Retail</h3></div><span class="pb-pill ${st.cls}">${st.text}</span></div>
+    ${measureInput('Gutter &amp; Downspout ft', 'gutterFt', m.gutterFt)}
+    <div class="measure-sub">LeafFilter footage · ${money(R.lf1)}/${money(R.lf2)}/${money(R.lf3)} per ft</div>
+    <div class="measure-row3">${measureInput('1st Story', 'lf1', m.lf1)}${measureInput('2nd Story', 'lf2', m.lf2)}${measureInput('3rd Story', 'lf3', m.lf3)}</div>
+    <div class="measure-sub">Versa Max footage · ${money(R.versaMax)} per ft</div>
+    <div class="measure-row3">${measureInput('1st Story', 'vm1', m.vm1)}${measureInput('2nd Story', 'vm2', m.vm2)}${measureInput('3rd Story', 'vm3', m.vm3)}</div>
+    <details class="extras-box" ${extrasCount ? 'open' : ''}><summary>Extras &amp; 5" <span id="extrasCount">${extrasCount ? extrasCount + ' added' : 'None added'}</span></summary>
+      <div class="extras-grid">${extras.map(x=>{ const q = clamp(m.extras[x.name]); return `<label class="extra-row ${q>0?'has-qty':''}"><span>${escapeHtml(x.name)}</span><small>${money2(x.price)}</small><input type="number" inputmode="decimal" min="0" step="1" data-extra="${escapeHtml(x.name)}" value="${q || ''}" placeholder="0"></label>`; }).join('')}</div>
+    </details>
+    <div id="measureResult">${measureResultHtml(opt)}</div>
+  </div>`;
+}
+
+function money2(n){ const v = Number(n) || 0; return v % 1 ? '$' + v.toFixed(2) : money(v); }
+
+function measureResultHtml(opt){
+  const b = priceBuild(opt);
+  if (!priceBook) return '';
+  if (!b) return `<div class="measure-empty">Enter footage to calculate the opening price.</div>`;
+  return `<div class="measure-result">
+    <div class="mr-main"><span>Opening Price</span><b>${money(b.opening)}</b></div>
+    <div class="mr-tiers">
+      <div class="mr-tier"><small>100% Retail</small><b>${money(b.retail100)}</b></div>
+      <div class="mr-tier"><small>Par</small><b>${money(b.par)}</b></div>
+      <div class="mr-tier"><small>Cost</small><b>${money(b.cost)}</b></div>
+    </div>
+    ${b.belowMinimum ? `<div class="measure-warn">Below the ${money(pb('pricing.jobMinimum', 500))} job minimum.</div>` : ''}
+  </div>`;
+}
+
+function retailSourceHtml(opt){
+  if (!priceBook) return `<span>Typed manually.</span>`;
+  const b = priceBuild(opt);
+  if (!b) return `<span>Enter footage above, or type the price.</span>`;
+  if (clamp(opt.retail) === b.opening) return `<span>From footage · price book v${priceBook.version || 0}</span>`;
+  if (opt.retailSource === 'calc') return `<span>Priced before the latest price update · now ${money(b.opening)}</span><button type="button" data-use-calc>Use current price</button>`;
+  return `<span>Typed manually · calculated ${money(b.opening)}</span><button type="button" data-use-calc>Use calculated</button>`;
+}
+
+function bindRetailSource(opt){
+  const btn = document.querySelector('#retailSource [data-use-calc]');
+  if (btn) btn.onclick = ()=>{
+    const b = priceBuild(opt); if (!b) return;
+    opt.retail = b.opening; opt.retailSource = 'calc';
+    const r = $('#retail'); if (r) r.value = b.opening;
+    refreshEditorCalculations(true);
+  };
+}
+
+function bindMeasureInputs(opt){
+  const onMeasure = ()=>{
+    const b = priceBuild(opt);
+    if (opt.retailSource !== 'manual') {
+      opt.retail = b ? b.opening : 0;
+      opt.retailSource = 'calc';
+      const r = $('#retail'); if (r && document.activeElement !== r) r.value = opt.retail || '';
+    }
+    const ec = $('#extrasCount');
+    if (ec) { const n = Object.values(measureOf(opt).extras).filter(v=>clamp(v) > 0).length; ec.textContent = n ? n + ' added' : 'None added'; }
+    refreshEditorCalculations(false);
+  };
+  document.querySelectorAll('#optionEditor [data-measure]').forEach(el=>{
+    el.oninput = ()=>{ measureOf(opt)[el.dataset.measure] = clamp(el.value); onMeasure(); };
+  });
+  document.querySelectorAll('#optionEditor [data-extra]').forEach(el=>{
+    el.oninput = ()=>{
+      const q = clamp(el.value);
+      const ex = measureOf(opt).extras;
+      if (q > 0) ex[el.dataset.extra] = q; else delete ex[el.dataset.extra];
+      el.closest('.extra-row').classList.toggle('has-qty', q > 0);
+      onMeasure();
+    };
+  });
+}
+
+/* ---------------------------------------------------------------- Rep-only numbers */
+function paymentMethods(){ return pb('rateCard.methods', [{id:'check', label:'Check / Cash', factor:1}]); }
+
+function payFactor(opt, c){
+  const m = opt.payMethod || 'finance';
+  if (m === 'finance') return Number(c.plan && c.plan.divide) || 1;
+  const meth = paymentMethods().find(x=>x.id === m);
+  return meth ? Number(meth.factor) || 1 : 1;
+}
+
+function commissionFor(salePrice, factor, build){
+  const C = pb('commission', {});
+  const commPrice = salePrice * factor - Number(C.deduction || 0);
+  let commission = (commPrice - build.truePar) * Number(C.overParPct || 0) / 100 + build.truePar * Number(C.ofParPct || 0) / 100;
+  const bonus = state.selfGen ? commPrice * Number(C.selfGenBonusPct || 0) / 100 : 0;
+  return {commPrice: Math.round(commPrice), commission: Math.round(commission + bonus), bonus: Math.round(bonus)};
+}
+
+function repNumbersHtml(opt){
+  const head = `<div class="rep-numbers-head"><span class="rep-chip">Rep Only</span><small>Never shown in Presentation Mode</small></div>`;
+  const b = priceBuild(opt);
+  if (!b) return head + `<div class="help" style="margin:0">Measure &amp; Price above to see Cost, Par, and commission for this option.</div>`;
+  const c = calcOption(opt);
+  const method = opt.payMethod || 'finance';
+  const factor = payFactor(opt, c);
+  const comm = commissionFor(c.cardPrice, factor, b);
+  const check = commissionFor(c.cardPrice, 1, b);
+  const diff = comm.commission - check.commission;
+  const methodOptions = paymentMethods().map(x=>`<option value="${escapeHtml(x.id)}" ${method===x.id?'selected':''}>${escapeHtml(x.label)} · ÷${Number(x.factor).toFixed(4)}</option>`).join('')
+    + `<option value="finance" ${method==='finance'?'selected':''}>Financing · ${escapeHtml(c.plan.lender)} ${escapeHtml(c.plan.plan)} · ÷${Number(c.plan.divide||1).toFixed(4)}</option>`;
+  const C = pb('commission', {});
+  return head + `
+    <div class="rep-tiles">
+      <div class="rep-tile"><small>Cost</small><b>${money(b.cost)}</b></div>
+      <div class="rep-tile"><small>Par</small><b>${money(b.par)}</b></div>
+      <div class="rep-tile"><small>Sale Price</small><b>${money(c.cardPrice)}</b></div>
+    </div>
+    <div class="field"><label>Customer Pays By</label><select id="repPayMethod">${methodOptions}</select></div>
+    <div class="rep-commission ${comm.commission<0?'negative':''}"><span>Est. Commission</span><b>${money(comm.commission)}</b></div>
+    <div class="rep-line"><span>Comm Price</span><b>${money(comm.commPrice)}</b></div>
+    ${method!=='check' ? `<div class="rep-line"><span>Cost to offer vs. check</span><b class="${diff<0?'down':'up'}">${diff<0?'-':'+'}${money(Math.abs(diff))}</b></div>` : ''}
+    ${state.selfGen ? `<div class="rep-line"><span>Self Gen bonus (${Number(C.selfGenBonusPct||0)}%)</span><b class="up">+${money(comm.bonus)}</b></div>` : ''}
+    <label class="check" style="margin-top:8px"><input type="checkbox" id="repSelfGen" ${state.selfGen?'checked':''}> Self Gen lead</label>
+    <div class="cost-deal"><div>Cost Deal · Final Offer<small>${opt.finalOffer ? 'Applied to this option' : 'Last option before leaving the home'} · Easy Pay ${money(monthlyForPlan(b.cost, c.plan))}/mo</small></div><div style="text-align:right"><b>${money(b.cost)}</b><br><button type="button" class="mini-btn ${opt.finalOffer?'':'green'}" id="repFinalOffer" style="margin-top:6px">${opt.finalOffer?'Remove':'Apply'}</button></div></div>
+    <div class="help" style="margin-top:8px">Estimate from the price sheet formula. Payroll's number is official.</div>`;
+}
+
+function bindRepNumbers(opt){
+  const pm = $('#repPayMethod'); if (pm) pm.onchange = e=>{ opt.payMethod = e.target.value; refreshEditorCalculations(false); };
+  const sg = $('#repSelfGen'); if (sg) sg.onchange = e=>{ state.selfGen = e.target.checked; refreshEditorCalculations(false); };
+  const fo = $('#repFinalOffer'); if (fo) fo.onclick = ()=>{ opt.finalOffer = !opt.finalOffer; refreshEditorCalculations(true); };
+}
+
+function finalOfferControlHtml(k){
+  const opt = state.options[k];
+  if (!opt || !priceBuild(opt) || !optionHasPrice(opt)) return '';
+  return `<div class="final-offer-row"><button type="button" class="final-offer-btn ${opt.finalOffer?'on':''}" data-final-offer="${k}">${opt.finalOffer ? 'Final Offer Applied' : 'Final Offer'}</button></div>`;
+}
+
+/* ---------------------------------------------------------------- NC sales tax */
+function taxInfo(){
+  const z = String(state.zip || '').trim().slice(0, 5);
+  if (!/^\d{5}$/.test(z)) return null;
+  const county = pb('tax.zips', {})[z];
+  const ncPrefix = /^2[78]/.test(z);
+  const vaPrefix = Number(z.slice(0, 3)) >= 201 && Number(z.slice(0, 3)) <= 246;
+  if (!county) return {zip: z, known: false, nc: ncPrefix, va: vaPrefix};
+  return {zip: z, known: true, nc: true, county, rate: Number(pb('tax.counties', {})[county] || 0)};
+}
+function taxAmount(price){ const t = taxInfo(); return t && t.known ? Math.round(price * t.rate / 100) : 0; }
+function renderTaxPill(){
+  const el = $('#taxPill'); if (!el) return;
+  const t = taxInfo();
+  el.className = 'tax-pill';
+  if (!t) { el.innerHTML = 'Enter ZIP'; return; }
+  if (t.known) { el.classList.add('ok'); el.innerHTML = `${t.rate}% NC sales tax<small>${escapeHtml(t.county)} County</small>`; return; }
+  if (t.nc) { el.classList.add('warn'); el.innerHTML = `NC ZIP not in territory list<small>Tax not set · ask admin to add it</small>`; return; }
+  el.innerHTML = `No NC sales tax<small>${t.va ? 'Virginia address' : 'Outside NC'}</small>`;
+}
+function taxRowsHtml(price){
+  const t = taxInfo(); if (!t || !t.known || !(price > 0)) return '';
+  const tax = taxAmount(price);
+  return `<div class="calc-row"><span>Est. NC Sales Tax (${t.rate}%)</span><strong>${money(tax)}</strong></div><div class="calc-row"><strong>Total with Tax</strong><strong>${money(price + tax)}</strong></div>`;
+}
+function taxSublineHtml(price){
+  const t = taxInfo(); if (!t || !t.known || !(price > 0)) return '';
+  return `<div class="final-price-tax">Plus est. NC sales tax ${money(taxAmount(price))} · ${escapeHtml(t.county)} County ${t.rate}%</div>`;
+}
+function proposalTaxLineHtml(price){
+  const t = taxInfo(); if (!t || !t.known || !(price > 0)) return '';
+  return `<div class="proposal-line"><span>Est. NC Sales Tax (${t.rate}%, ${escapeHtml(t.county)} County)</span><b>${money(taxAmount(price))}</b></div>`;
+}
+const __renderHeaderInfo = renderHeaderInfo;
+renderHeaderInfo = function(){ __renderHeaderInfo(); renderTaxPill(); };
+
+/* ---------------------------------------------------------------- One-time device setup links */
+(function(){
+  try {
+    const params = new URLSearchParams(window.location.search || '');
+    const team = params.get('team');
+    if (team) localStorage.setItem(TEAM_CODE_KEY, team.trim());
+  } catch (e) {}
+})();
+
+/* =====================================================================
+ * ADMIN · Pricing Controls
+ * The password is checked by Google Apps Script on every save; this page
+ * never stores it. Payment-option factors are locked to the rate card.
+ * ===================================================================== */
+const admin = {password:'', live:null, draft:null, tab:'pricing', replaceCard:false, cardDate:'', cardConfirm:false, history:null, busy:false, note:'', error:''};
+const ADMIN_TABS = [['pricing','Price Points'],['discounts','Discounts'],['ratecard','Rate Card'],['tax','Sales Tax'],['commission','Commission'],['history','History']];
+const SAMPLE_JOB = {measure:{gutterFt:200, lf1:268, extras:{'Corners (Filter)':8}}};
+
+function stripMeta(book){ const c = copyObj(book || {}); delete c.version; delete c.publishedAt; delete c.publishedBy; return c; }
+function adminDirty(){ return !!(admin.draft && JSON.stringify(stripMeta(admin.draft)) !== JSON.stringify(stripMeta(admin.live || {}))); }
+function sectionDirty(key){ return !!(admin.draft && JSON.stringify((admin.draft||{})[key]) !== JSON.stringify((admin.live||{})[key])); }
+function aGet(path){ return pathGet(admin.draft, path); }
+function aLive(path){ return pathGet(admin.live, path); }
+function aSet(path, val){ const ks = path.split('.'); let o = admin.draft; for (let i = 0; i < ks.length - 1; i++) o = o[ks[i]]; o[ks[ks.length - 1]] = val; }
+function aChanged(path){ return !!admin.live && String(aGet(path)) !== String(aLive(path)); }
+
+function renderAdminButton(){
+  const b = $('#adminBtn'); if (!b) return;
+  let show = adminToolsEnabled();
+  try { show = show || localStorage.getItem(ADMIN_DEVICE_KEY) === '1'; } catch (e) {}
+  b.classList.toggle('hidden', !show);
+}
+function openAdmin(){ $('#adminModal').classList.remove('hidden'); renderAdmin(); setTimeout(()=>{ const pw = $('#adminPw'); if (pw) pw.focus(); }, 50); }
+function closeAdmin(){
+  if (adminDirty() && !confirm('Close without publishing? Your unpublished pricing changes will be discarded.')) return;
+  $('#adminModal').classList.add('hidden');
+  admin.draft = admin.live ? copyObj(admin.live) : admin.draft;
+  admin.replaceCard = false; admin.cardConfirm = false; admin.note = '';
+}
+
+function renderAdmin(){
+  const body = $('#adminBody'), tabs = $('#adminTabs'), foot = $('#adminFoot');
+  if (!admin.password) {
+    tabs.classList.add('hidden'); foot.classList.add('hidden');
+    body.innerHTML = `<div class="admin-login"><div class="eyebrow">Admin only</div><h3>Enter the admin password</h3>
+      <p>Price changes publish to every rep on the team. Google checks this password on every save.</p>
+      <input type="password" id="adminPw" autocomplete="current-password" placeholder="Admin password">
+      <button class="btn green" id="adminUnlock">Unlock Pricing Controls</button>
+      <div class="admin-error" id="adminErr">${escapeHtml(admin.error || '')}</div></div>`;
+    const pw = $('#adminPw');
+    const go = async ()=>{
+      const btn = $('#adminUnlock'); btn.disabled = true; btn.textContent = 'Checking…';
+      try {
+        const res = await priceBookRequest('adminLogin', {password: pw.value});
+        if (!res || !res.success) throw new Error(res && res.message || 'Could not sign in.');
+        admin.password = pw.value; admin.error = '';
+        admin.live = res.priceBook || null;
+        admin.draft = copyObj(admin.live || priceBook || null);
+        if (admin.live) setPriceBook(admin.live);
+        try { localStorage.setItem(ADMIN_DEVICE_KEY, '1'); } catch (e) {}
+        renderAdminButton();
+      } catch (e) { admin.error = e.message || String(e); }
+      renderAdmin();
+    };
+    $('#adminUnlock').onclick = go;
+    pw.onkeydown = e=>{ if (e.key === 'Enter') go(); };
+    return;
+  }
+  if (!admin.draft) {
+    tabs.classList.add('hidden'); foot.classList.add('hidden');
+    body.innerHTML = `<div class="admin-login"><h3>No price book in Google Sheets yet</h3><p>Add the starting price book row to the "App Price Book" tab, then reopen Admin.</p></div>`;
+    return;
+  }
+  tabs.classList.remove('hidden'); foot.classList.remove('hidden');
+  renderAdminTabs();
+  const views = {pricing: adminPricingView, discounts: adminDiscountsView, ratecard: adminRateCardView, tax: adminTaxView, commission: adminCommissionView, history: adminHistoryView};
+  body.innerHTML = views[admin.tab]();
+  bindAdminInputs();
+  renderAdminFoot();
+}
+
+function renderAdminTabs(){
+  const sectionFor = {pricing:'pricing', discounts:'discounts', ratecard:'rateCard', tax:'tax', commission:'commission'};
+  $('#adminTabs').innerHTML = ADMIN_TABS.map(([k, label])=>`<button class="${admin.tab===k?'active':''}" data-atab="${k}">${label}${sectionFor[k] && sectionDirty(sectionFor[k]) ? '<span class="dot"></span>' : ''}</button>`).join('');
+  document.querySelectorAll('[data-atab]').forEach(b=>b.onclick = ()=>{ admin.tab = b.dataset.atab; renderAdmin(); $('#adminBody').scrollTop = 0; });
+}
+
+function aField(label, path, o={}){
+  const v = aGet(path);
+  return `<div class="field"><label>${label}</label><div class="admin-input-wrap">${o.pre?`<span class="unit pre">${o.pre}</span>`:''}<input type="number" inputmode="decimal" step="${o.step||'any'}" data-apath="${path}" value="${v ?? ''}" class="${o.pre?'has-pre':''} ${aChanged(path)?'changed':''}">${o.unit?`<span class="unit">${o.unit}</span>`:''}</div>${o.help?`<div class="help">${o.help}</div>`:''}</div>`;
+}
+function aText(path, o={}){ return `<input type="text" data-apath="${path}" data-atype="text" value="${escapeHtml(aGet(path) ?? '')}" class="${aChanged(path)?'changed':''}" ${o.placeholder?`placeholder="${o.placeholder}"`:''}>`; }
+function aNum(path, o={}){ return `<input type="number" inputmode="decimal" step="${o.step||'any'}" data-apath="${path}" value="${aGet(path) ?? ''}" class="${aChanged(path)?'changed':''}">`; }
+
+function previewHtml(){
+  const now = priceBuild(SAMPLE_JOB, admin.draft);
+  const was = admin.live ? priceBuild(SAMPLE_JOB, admin.live) : null;
+  if (!now) return '';
+  const tile = (label, key)=>`<div><small>${label}</small><b>${money(now[key])}</b>${was && was[key] !== now[key] ? `<span class="was">was ${money(was[key])}</span>` : ''}</div>`;
+  return `<div class="admin-section"><h3>Preview · sample job</h3><p>200 ft gutter &amp; downspout, 268 ft first-story LeafFilter, 8 corners. Updates as you type.</p>
+    <div class="preview-card" id="adminPreview">${tile('Opening Price','opening')}${tile('100% Retail','retail100')}${tile('Par','par')}${tile('Cost','cost')}</div></div>`;
+}
+
+function adminPricingView(){
+  const extras = aGet('pricing.extras') || [];
+  return `${previewHtml()}
+  <div class="admin-section"><h3>Retail price per foot</h3><p>What each foot adds to 100% Retail.</p>
+    <div class="admin-fields">
+      ${aField('Gutter &amp; Downspout','pricing.retailPerFt.gutterDs',{pre:'$',unit:'/ft'})}
+      ${aField('LeafFilter · 1st Story','pricing.retailPerFt.lf1',{pre:'$',unit:'/ft'})}
+      ${aField('LeafFilter · 2nd Story','pricing.retailPerFt.lf2',{pre:'$',unit:'/ft'})}
+      ${aField('LeafFilter · 3rd Story','pricing.retailPerFt.lf3',{pre:'$',unit:'/ft'})}
+      ${aField('Versa Max · any story','pricing.retailPerFt.versaMax',{pre:'$',unit:'/ft'})}
+    </div></div>
+  <div class="admin-section"><h3>Extras &amp; 5"</h3><p>Priced per unit or per foot. Reps see these in Measure &amp; Price.</p>
+    <table class="admin-table"><thead><tr><th>Item</th><th style="width:140px">Price</th><th style="width:70px"></th></tr></thead><tbody>
+    ${extras.map((x,i)=>`<tr><td>${aText(`pricing.extras.${i}.name`)}</td><td>${aNum(`pricing.extras.${i}.price`)}</td><td><button class="mini-btn danger" data-del-extra="${i}">Remove</button></td></tr>`).join('')}
+    </tbody></table><button class="mini-btn" id="addExtra" style="margin-top:10px">+ Add item</button></div>
+  <div class="admin-section"><h3>Cost, Par &amp; opening price</h3><p>How the app turns 100% Retail into the other price levels.</p>
+    <div class="admin-fields">
+      ${aField('Added to every job','pricing.jobAdd',{pre:'$'})}
+      ${aField('Gutter cost','pricing.gutterCostPerFt',{pre:'$',unit:'/ft'})}
+      ${aField('Cost divisor (LF, Versa Max, extras)','pricing.costDivisor',{unit:'÷'})}
+      ${aField('Par percent','pricing.parPct',{unit:'%'})}
+      ${aField('Par add-back','pricing.parAdd',{pre:'$'})}
+      ${aField('Opening price multiplier','pricing.openingMultiplier',{unit:'×',step:'0.00001'})}
+      ${aField('Job minimum','pricing.jobMinimum',{pre:'$'})}
+    </div>
+    <div class="formula">100% Retail = footage × price per foot + extras + ${money(aGet('pricing.jobAdd'))}<br>Cost = gutter ft × ${money(aGet('pricing.gutterCostPerFt'))} + (LeafFilter + Versa Max + extras) ÷ ${aGet('pricing.costDivisor')}<br>Par = ${aGet('pricing.parPct')}% × (100% Retail − ${money(aGet('pricing.parAdd'))}) + ${money(aGet('pricing.parAdd'))}<br>Opening Price = 100% Retail × ${aGet('pricing.openingMultiplier')}</div></div>`;
+}
+
+function adminDiscountsView(){
+  const qs = aGet('discounts.quickStart') || [];
+  const def = aGet('discounts.quickStartDefault');
+  return `<div class="admin-section"><h3>Customer discounts</h3><p>Senior and Military apply first and stack. Both set the One-Year Price.</p>
+    <div class="admin-fields">
+      ${aField('Senior','discounts.seniorPct',{unit:'%'})}
+      ${aField('Military','discounts.militaryPct',{unit:'%'})}
+      ${aField('Decision-Maker Discount','discounts.decisionMaker',{pre:'$',help:'Everyone who decides is at the table; a homeowner who decides alone qualifies.'})}
+      ${aField('Preferred Payment Savings','discounts.preferredPaymentPct',{unit:'%'})}
+      ${aField('Flexible Installation','discounts.flexibleInstallPct',{unit:'%'})}
+    </div></div>
+  <div class="admin-section"><h3>Quick Start choices</h3><p>The choices reps can pick from during the appointment. The default is pre-selected on new deals.</p>
+    <table class="admin-table"><thead><tr><th>Label reps see</th><th style="width:150px">Type</th><th style="width:130px">Amount</th><th style="width:80px">Default</th><th style="width:70px"></th></tr></thead><tbody>
+    ${qs.map((q,i)=>`<tr><td>${aText(`discounts.quickStart.${i}.label`)}</td><td><select data-apath="discounts.quickStart.${i}.type" data-atype="text"><option value="percent" ${q.type==='percent'?'selected':''}>Percent</option><option value="fixed" ${q.type==='fixed'?'selected':''}>Dollar amount</option><option value="none" ${q.type==='none'?'selected':''}>None</option></select></td><td>${q.type==='none'?'—':aNum(`discounts.quickStart.${i}.value`)}</td><td style="text-align:center"><input type="radio" name="qsDefault" data-qs-default="${escapeHtml(q.id)}" ${def===q.id?'checked':''}></td><td>${def===q.id?'':`<button class="mini-btn danger" data-del-qs="${i}">Remove</button>`}</td></tr>`).join('')}
+    </tbody></table><button class="mini-btn" id="addQs" style="margin-top:10px">+ Add choice</button></div>`;
+}
+
+function pctText(r){ return (Number(r) * 100).toFixed(4).replace(/0+$/, '').replace(/\.$/, '') + '%'; }
+
+function adminRateCardView(){
+  const plans = aGet('rateCard.plans') || [];
+  const methods = aGet('rateCard.methods') || [];
+  const rc = admin.replaceCard;
+  const banner = rc
+    ? `<div class="lock-banner replace"><div><b>Loading a new LeafFilter rate card</b>Enter every factor and payment rate exactly as printed on the new card. Never enter merchant IDs, merchant numbers, or passcodes.
+        <div class="admin-fields" style="margin-top:10px"><div class="field"><label>New card date (printed on the card)</label><input type="date" id="cardDate" value="${escapeHtml(admin.cardDate)}"></div></div>
+        <label class="check" style="margin-top:8px"><input type="checkbox" id="cardConfirm" ${admin.cardConfirm?'checked':''}> I entered these values exactly from the LeafFilter rate card dated above.</label></div>
+        <button class="btn secondary" id="cancelCard">Cancel</button></div>`
+    : `<div class="lock-banner"><div><b>Locked to the LeafFilter rate card dated ${escapeHtml(aGet('rateCard.date') || '—')}</b>Factors and payment rates can't be edited. You can turn plans on or off and mark the most common ones. When LeafFilter issues a new card, load it here.</div><button class="btn secondary" id="replaceCard">Load New Rate Card</button></div>`;
+  const cell = (i, key, text)=> rc ? aNum(`rateCard.plans.${i}.${key}`, {step:'0.000001'}) : `<span class="locked">${text}</span>`;
+  return `${banner}
+  <div class="admin-section"><h3>Financing plans</h3><p>Off plans disappear from the reps' plan list. Most-common plans power "Use Lowest Monthly Plan."</p>
+  <div style="overflow:auto"><table class="admin-table"><thead><tr><th>On</th><th>Common</th><th>Plan</th><th>Terms</th><th style="width:110px">Divide factor</th><th style="width:120px">Payment</th><th style="width:110px">Min job</th></tr></thead><tbody>
+  ${plans.map((p,i)=>`<tr class="${p.active===false?'inactive':''}"><td><label class="switch"><input type="checkbox" data-apath="rateCard.plans.${i}.active" data-atype="bool" ${p.active!==false?'checked':''}><span></span></label></td>
+    <td><label class="switch"><input type="checkbox" data-apath="rateCard.plans.${i}.common" data-atype="bool" ${p.common?'checked':''}><span></span></label></td>
+    <td><b>${escapeHtml(p.lender)} ${escapeHtml(p.plan)}</b></td><td>${rc?aText(`rateCard.plans.${i}.detail`):escapeHtml(p.detail)}</td>
+    <td class="num">${cell(i,'divide',Number(p.divide).toFixed(4))}</td>
+    <td class="num">${p.payType==='term' ? (rc?aNum(`rateCard.plans.${i}.term`):`<span class="locked">÷ ${p.term} mo</span>`) : cell(i,'rate',pctText(p.rate) + (p.min?` / $${p.min}`:''))}</td>
+    <td class="num">${rc?aNum(`rateCard.plans.${i}.minAmount`):(p.minAmount?money(p.minAmount):'—')}</td></tr>`).join('')}
+  </tbody></table></div></div>
+  <div class="admin-section"><h3>Card &amp; Lowe's factors</h3><p>Used for rep commission when the customer pays by card or through Lowe's.</p>
+  <table class="admin-table"><thead><tr><th>Payment</th><th style="width:140px">Divide factor</th></tr></thead><tbody>
+  ${methods.map((m,i)=>`<tr><td><b>${escapeHtml(m.label)}</b></td><td class="num">${rc?aNum(`rateCard.methods.${i}.factor`,{step:'0.0001'}):`<span class="locked">${Number(m.factor).toFixed(4)}</span>`}</td></tr>`).join('')}
+  </tbody></table></div>`;
+}
+
+function adminTaxView(){
+  const counties = aGet('tax.counties') || {};
+  const zips = aGet('tax.zips') || {};
+  const byCounty = {};
+  Object.keys(zips).sort().forEach(z=>{ (byCounty[zips[z]] = byCounty[zips[z]] || []).push(z); });
+  const names = Object.keys(counties).sort();
+  return `<div class="admin-section"><h3>NC sales tax by county</h3><p>Source: ${escapeHtml(aGet('tax.source') || 'NC Department of Revenue')}. Reps can't change the rate; it's set by the customer's ZIP.</p>
+    <table class="admin-table"><thead><tr><th>County</th><th style="width:140px">Rate</th><th>ZIP codes</th></tr></thead><tbody>
+    ${names.map(n=>`<tr><td><b>${escapeHtml(n)}</b></td><td>${aNum('tax.counties.'+n,{step:'0.01'})}</td><td><details><summary style="cursor:pointer;font-weight:900">${(byCounty[n]||[]).length} ZIPs</summary><div class="zip-chips">${(byCounty[n]||[]).map(z=>`<span class="zip-chip">${z}<button data-del-zip="${z}" aria-label="Remove ${z}">×</button></span>`).join('')}</div></details></td></tr>`).join('')}
+    </tbody></table></div>
+  <div class="admin-section"><h3>Add or move a ZIP</h3><p>Some ZIPs cross county lines. Assign the county where most of your jobs in that ZIP fall.</p>
+    <div class="admin-fields"><div class="field"><label>ZIP</label><input id="zipAdd" inputmode="numeric" maxlength="5" placeholder="27932"></div>
+    <div class="field"><label>County</label><select id="zipCounty">${names.map(n=>`<option>${escapeHtml(n)}</option>`).join('')}</select></div>
+    <div class="field"><label>&nbsp;</label><button class="btn green" id="zipAddBtn" style="width:100%">Save ZIP</button></div></div></div>`;
+}
+
+function adminCommissionView(){
+  return `<div class="admin-section"><h3>Commission estimate</h3><p>Reps see this estimate in their rep-only panel. Payroll's number stays official.</p>
+    <div class="admin-fields">
+      ${aField('Deduction from sale','commission.deduction',{pre:'$'})}
+      ${aField('Share above Par','commission.overParPct',{unit:'%'})}
+      ${aField('Share of Par','commission.ofParPct',{unit:'%'})}
+      ${aField('Self Gen bonus','commission.selfGenBonusPct',{unit:'%'})}
+    </div>
+    <div class="formula">Comm Price = Sale price × payment factor − ${money(aGet('commission.deduction'))}<br>Commission = (Comm Price − True Par) × ${aGet('commission.overParPct')}% + True Par × ${aGet('commission.ofParPct')}%<br>True Par = Par − ${money(aGet('pricing.parAdd'))} · Self Gen adds ${aGet('commission.selfGenBonusPct')}% of Comm Price</div></div>`;
+}
+
+function adminHistoryView(){
+  if (!admin.history) {
+    priceBookRequest('priceBookHistory', {password: admin.password}).then(res=>{
+      admin.history = res && res.success ? res.history : [];
+      if (admin.tab === 'history') renderAdmin();
+    }).catch(()=>{ admin.history = []; if (admin.tab === 'history') renderAdmin(); });
+    return `<div class="admin-section"><h3>Published versions</h3><p>Loading…</p></div>`;
+  }
+  const live = admin.live ? admin.live.version : 0;
+  return `<div class="admin-section"><h3>Published versions</h3><p>Every publish is kept. Each change is also logged line by line in the "App Change Log" tab of the Google Sheet.</p>
+    ${admin.history.length ? admin.history.map(h=>`<div class="history-row"><b>v${h.version}</b><div>${escapeHtml(h.note || 'No note')}<small>${h.publishedAt ? new Date(h.publishedAt).toLocaleString() : ''}</small></div><div>${h.version===live?'<span class="pb-pill">Live</span>':`<button class="mini-btn" data-restore="${h.version}">Restore</button>`}</div></div>`).join('') : '<p>No versions yet.</p>'}</div>`;
+}
+
+function updateAdminPreview(){
+  const el = $('#adminPreview'); if (!el) return;
+  const wrap = document.createElement('div'); wrap.innerHTML = previewHtml();
+  const fresh = wrap.querySelector('#adminPreview'); if (fresh) el.innerHTML = fresh.innerHTML;
+}
+
+function bindAdminInputs(){
+  document.querySelectorAll('#adminBody [data-apath]').forEach(el=>{
+    const handler = ()=>{
+      const t = el.dataset.atype || 'number';
+      const v = t === 'text' ? el.value : t === 'bool' ? el.checked : (el.value === '' ? 0 : Number(el.value));
+      aSet(el.dataset.apath, v);
+      if (t !== 'bool') el.classList.toggle('changed', aChanged(el.dataset.apath));
+      if (t === 'bool' || el.tagName === 'SELECT') { renderAdmin(); return; }
+      updateAdminPreview(); renderAdminTabs(); renderAdminFoot();
+    };
+    if (el.type === 'checkbox' || el.tagName === 'SELECT') el.onchange = handler; else el.oninput = handler;
+  });
+  document.querySelectorAll('[data-del-extra]').forEach(b=>b.onclick = ()=>{ aGet('pricing.extras').splice(Number(b.dataset.delExtra), 1); renderAdmin(); });
+  const ae = $('#addExtra'); if (ae) ae.onclick = ()=>{ aGet('pricing.extras').push({name:'New item', price:0}); renderAdmin(); };
+  document.querySelectorAll('[data-del-qs]').forEach(b=>b.onclick = ()=>{ aGet('discounts.quickStart').splice(Number(b.dataset.delQs), 1); renderAdmin(); });
+  document.querySelectorAll('[data-qs-default]').forEach(r=>r.onchange = ()=>{ aSet('discounts.quickStartDefault', r.dataset.qsDefault); renderAdmin(); });
+  const aq = $('#addQs'); if (aq) aq.onclick = ()=>{ aGet('discounts.quickStart').push({id:'qs' + Date.now().toString(36), label:'New choice', type:'percent', value:0}); renderAdmin(); };
+  const rc = $('#replaceCard'); if (rc) rc.onclick = ()=>{ admin.replaceCard = true; admin.cardDate = ''; admin.cardConfirm = false; renderAdmin(); };
+  const cc = $('#cancelCard'); if (cc) cc.onclick = ()=>{ admin.replaceCard = false; admin.draft.rateCard = copyObj(admin.live ? admin.live.rateCard : admin.draft.rateCard); renderAdmin(); };
+  const cd = $('#cardDate'); if (cd) cd.onchange = ()=>{ admin.cardDate = cd.value; renderAdminFoot(); };
+  const cf = $('#cardConfirm'); if (cf) cf.onchange = ()=>{ admin.cardConfirm = cf.checked; renderAdminFoot(); };
+  document.querySelectorAll('[data-del-zip]').forEach(b=>b.onclick = ()=>{ delete aGet('tax.zips')[b.dataset.delZip]; renderAdmin(); });
+  const za = $('#zipAddBtn'); if (za) za.onclick = ()=>{
+    const z = ($('#zipAdd').value || '').trim();
+    if (!/^\d{5}$/.test(z)) { showToast('Enter a 5-digit ZIP.', 'warn'); return; }
+    aGet('tax.zips')[z] = $('#zipCounty').value; renderAdmin();
+  };
+  document.querySelectorAll('[data-restore]').forEach(b=>b.onclick = async ()=>{
+    if (!confirm(`Restore version ${b.dataset.restore}? It publishes as a new version for every rep.`)) return;
+    try {
+      const res = await priceBookRequest('restorePriceBook', {password: admin.password, version: Number(b.dataset.restore)});
+      if (!res || !res.success) throw new Error(res && res.message || 'Restore failed.');
+      admin.live = res.priceBook; admin.draft = copyObj(res.priceBook); admin.history = null;
+      setPriceBook(res.priceBook); showToast(`Restored · now version ${res.version}`); renderAdmin();
+    } catch (e) { showToast(e.message || String(e), 'error'); }
+  });
+}
+
+function rateCardFactorsChanged(){
+  const pick = card => JSON.stringify({plans:(card && card.plans || []).map(p=>[p.id,p.divide,p.rate,p.term,p.min,p.minAmount,p.payType]), methods:(card && card.methods || []).map(m=>[m.id,m.factor])});
+  return pick(admin.draft.rateCard) !== pick(admin.live && admin.live.rateCard);
+}
+
+function renderAdminFoot(){
+  const foot = $('#adminFoot'); if (!foot || !admin.draft) return;
+  const dirty = adminDirty();
+  const live = admin.live;
+  const status = dirty
+    ? `<div class="status dirty">Unpublished changes<small>Reps still see version ${live ? live.version : '—'}</small></div>`
+    : `<div class="status">Live: version ${live ? live.version : '—'}<small>${live && live.publishedAt ? 'Published ' + new Date(live.publishedAt).toLocaleString() : ''}</small></div>`;
+  const actions = dirty
+    ? `<input id="adminNote" placeholder="What changed? (shows in History)" value="${escapeHtml(admin.note)}"><button class="btn secondary" id="adminDiscard">Discard</button><button class="btn green" id="adminPublish" ${admin.busy?'disabled':''}>${admin.busy?'Publishing…':'Publish to Reps'}</button>`
+    : `<button class="btn secondary" id="adminLock">Lock Admin</button><button class="btn green" id="adminDone">Done</button>`;
+  foot.innerHTML = status + `<div class="actions">${actions}</div>`;
+  const note = $('#adminNote'); if (note) note.oninput = ()=>{ admin.note = note.value; };
+  const d = $('#adminDiscard'); if (d) d.onclick = ()=>{ admin.draft = copyObj(admin.live); admin.replaceCard = false; admin.note = ''; renderAdmin(); };
+  const l = $('#adminLock'); if (l) l.onclick = ()=>{ admin.password = ''; admin.history = null; renderAdmin(); };
+  const dn = $('#adminDone'); if (dn) dn.onclick = ()=>closeAdmin();
+  const p = $('#adminPublish'); if (p) p.onclick = publishAdmin;
+}
+
+async function publishAdmin(){
+  if (rateCardFactorsChanged()) {
+    if (!admin.replaceCard) { showToast('Rate card factors change only by loading a new rate card.', 'error'); return; }
+    if (!admin.cardDate || admin.cardDate === (admin.live && admin.live.rateCard.date)) { showToast('Enter the new rate card date.', 'warn'); admin.tab = 'ratecard'; renderAdmin(); return; }
+    if (!admin.cardConfirm) { showToast('Confirm the values match the new rate card.', 'warn'); admin.tab = 'ratecard'; renderAdmin(); return; }
+    admin.draft.rateCard.date = admin.cardDate;
+  }
+  admin.busy = true; renderAdminFoot();
+  try {
+    const res = await priceBookRequest('savePriceBook', {password: admin.password, priceBook: stripMeta(admin.draft), note: admin.note});
+    if (!res || !res.success) throw new Error(res && res.message || 'Publish failed.');
+    admin.live = res.priceBook; admin.draft = copyObj(res.priceBook);
+    admin.replaceCard = false; admin.cardConfirm = false; admin.note = ''; admin.history = null;
+    setPriceBook(res.priceBook);
+    showToast(`Published version ${res.version} · ${res.changes} change${res.changes===1?'':'s'}`);
+  } catch (e) { showToast(e.message || String(e), 'error'); }
+  admin.busy = false; renderAdmin();
+}
+
+$('#adminBtn').onclick = ()=>openAdmin();
+$('#adminClose').onclick = ()=>closeAdmin();
+$('#adminModal').addEventListener('click', e=>{ if (e.target.id === 'adminModal') closeAdmin(); });
+
 registerFieldAppSupport();
 restoreWorkingState();
 render();
+renderAdminButton();
+syncPriceBook(false);
 if(navigator.onLine) syncPendingCloudDeals(false);
 </script>
 </body>
