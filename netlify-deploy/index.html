@@ -1742,7 +1742,8 @@
 .jb-head h3{margin:3px 0 0;font-size:18px;color:var(--navy)}
 .jb-group{border-radius:16px;background:var(--ice);border:1px solid #E1EAE6;padding:10px 10px 6px;margin-bottom:10px}
 .jb-group-title{font-size:11px;letter-spacing:.07em;text-transform:uppercase;font-weight:950;color:var(--green2);margin:0 2px 8px}
-.jb-row{display:grid;grid-template-columns:62px repeat(3,1fr);gap:6px;align-items:center;margin-bottom:6px}
+.jb-row{display:grid;grid-template-columns:62px repeat(2,1fr);gap:8px;align-items:center;margin-bottom:6px}
+.jb-single{display:block}.jb-single .jb-col{text-align:left;margin:0 2px 6px}
 .jb-row.jb-two{grid-template-columns:1fr 1fr;align-items:end}
 .jb-cols{margin-bottom:4px}
 .jb-col{display:block;font-size:11px;font-weight:950;color:var(--navy);text-align:center;line-height:1.15}
@@ -1778,7 +1779,7 @@
 body.admin-page .app{display:none}
 body.admin-page #adminModal{background:linear-gradient(135deg,#F7FBFD 0%,#EBF3F7 100%);backdrop-filter:none}
 body.admin-page .admin-card{height:94vh;max-height:94vh}
-@media(max-width:520px){.jb-row{grid-template-columns:48px repeat(3,1fr);gap:5px}.jb-cell input{padding:9px 7px;font-size:16px}}
+@media(max-width:520px){.jb-row{grid-template-columns:48px repeat(2,1fr);gap:6px}.jb-cell input{padding:9px 7px;font-size:16px}}
 @media(max-width:820px){.preview-card{grid-template-columns:repeat(2,1fr)}.admin-foot{flex-direction:column;align-items:stretch}.admin-foot input{min-width:0;width:100%}}
 </style>
   <!-- v10: removed duplicate hero logo from presentation screen; header logo remains. -->
@@ -3505,7 +3506,8 @@ function priceBookStatus(){
 }
 
 /* ---------------------------------------------------------------- Job Build (footage → price) */
-const LF_SIZES = [['lf5','5" LeafFilter'],['lf6','6" LeafFilter'],['vm','Versa Max']];
+// Pricing is simplified: all LeafFilter and gutters are charged at the 6" price.
+const LF_SIZES = [['lf6','LeafFilter'],['vm','Versa Max']];
 const FLOORS = [['1','1st Floor'],['2','2nd Floor'],['3','3rd Floor']];
 
 function measureOf(opt){
@@ -3517,6 +3519,8 @@ function measureOf(opt){
     ['1','2','3'].forEach(f=>{ if (m['lf'+f] && !m['lf6_'+f]) m['lf6_'+f] = m['lf'+f]; if (m['vm'+f] && !m['vm_'+f]) m['vm_'+f] = m['vm'+f]; delete m['lf'+f]; delete m['vm'+f]; });
     if (m.gutterFt && !m.g5) m.g5 = m.gutterFt; delete m.gutterFt;
   }
+  ['1','2','3'].forEach(f=>{ if (m['lf5_'+f]) { m['lf6_'+f] = clamp(m['lf6_'+f]) + clamp(m['lf5_'+f]); delete m['lf5_'+f]; } });
+  if (m.g5) { m.g6 = clamp(m.g6) + clamp(m.g5); delete m.g5; }
   return m;
 }
 
@@ -3530,8 +3534,8 @@ function priceBuild(opt, book){
   const ex = m.extras || {};
   let lf = 0;
   LF_SIZES.forEach(([k])=>FLOORS.forEach(([f])=>{ lf += clamp(m[k+'_'+f]) * Number(R[k+'_'+f] || 0); }));
-  const gutterFt = clamp(m.g5) + clamp(m.g6);
-  const gutter = clamp(m.g5) * Number(R.gutter5 || 0) + clamp(m.g6) * Number(R.gutter6 || 0);
+  const gutterFt = clamp(m.g6);
+  const gutter = clamp(m.g6) * Number(R.gutter6 || 0);
   let extras = 0, vendorCost = 0;
   (P.extras || []).forEach(x=>{
     const q = clamp(ex[x.name]);
@@ -3580,7 +3584,7 @@ function measureCardHtml(opt){
         ${lfRows}
       </div></div>
     <div class="jb-group"><div class="jb-group-title">Gutters &amp; Downspouts · feet</div>
-      <div class="jb-row jb-two"><label class="jb-cell"><span class="jb-col">5" Seamless<small>${money(R.gutter5)}/ft · 2×3 downs</small></span>${ftInput('g5', m.g5, '5 inch gutters')}</label><label class="jb-cell"><span class="jb-col">6" Seamless<small>${money(R.gutter6)}/ft · 3×4 downs</small></span>${ftInput('g6', m.g6, '6 inch gutters')}</label></div>
+      <label class="jb-cell jb-single"><span class="jb-col">Seamless gutters &amp; downspouts<small>${money(R.gutter6)}/ft</small></span>${ftInput('g6', m.g6, 'Gutters and downspouts feet')}</label>
     </div>
     <details class="extras-box" ${extrasCount ? 'open' : ''}><summary>Extras <span id="extrasCount">${extrasCount ? extrasCount + ' added' : 'None added'}</span></summary>
       <div class="extras-grid">${extras.map(x=>{ const q = clamp(m.extras[x.name]); return `<label class="extra-row ${q>0?'has-qty':''}"><span>${escapeHtml(x.name)}</span><small>${escapeHtml(extraUnitLabel(x))}</small><input type="number" inputmode="decimal" min="0" step="any" data-extra="${escapeHtml(x.name)}" value="${q || ''}" placeholder="${x.type==='multiplier'?'$0':'0'}"></label>`; }).join('')}</div>
@@ -3803,7 +3807,7 @@ renderHeaderInfo = function(){ __renderHeaderInfo(); renderTaxPill(); renderRepN
  * ===================================================================== */
 const admin = {password:'', live:null, draft:null, tab:'pricing', replaceCard:false, cardDate:'', cardConfirm:false, history:null, busy:false, note:'', error:''};
 const ADMIN_TABS = [['pricing','Price Points'],['discounts','Discounts'],['ratecard','Rate Card'],['tax','Sales Tax'],['commission','Commission'],['notes','Rep Notes'],['history','History']];
-const SAMPLE_JOB = {measure:{g5:200, lf6_1:268, extras:{'Inside or outside mitres':8}}};
+const SAMPLE_JOB = {measure:{g6:200, lf6_1:268, extras:{'Inside or outside mitres':8}}};
 
 function stripMeta(book){ const c = copyObj(book || {}); delete c.version; delete c.publishedAt; delete c.publishedBy; return c; }
 function adminDirty(){ return !!(admin.draft && JSON.stringify(stripMeta(admin.draft)) !== JSON.stringify(stripMeta(admin.live || {}))); }
@@ -3886,7 +3890,7 @@ function previewHtml(){
   const was = admin.live ? priceBuild(SAMPLE_JOB, admin.live) : null;
   if (!now) return '';
   const tile = (label, key)=>`<div><small>${label}</small><b>${money(now[key])}</b>${was && was[key] !== now[key] ? `<span class="was">was ${money(was[key])}</span>` : ''}</div>`;
-  return `<div class="admin-section"><h3>Preview · sample job</h3><p>200 ft 5" gutters, 268 ft 6" LeafFilter on the 1st floor, 8 mitres. Updates as you type.</p>
+  return `<div class="admin-section"><h3>Preview · sample job</h3><p>200 ft gutters, 268 ft LeafFilter on the 1st floor, 8 mitres. Updates as you type.</p>
     <div class="preview-card" id="adminPreview">${tile('Opening Price','opening')}${tile('100% Retail','retail100')}${tile('Par','par')}${tile('Cost','cost')}</div></div>`;
 }
 
@@ -3894,12 +3898,12 @@ function adminPricingView(){
   const extras = aGet('pricing.extras') || [];
   const cell = (k)=> aGet('pricing.retailPerFt.'+k) === undefined ? '<td class="num">—</td>' : `<td>${aNum('pricing.retailPerFt.'+k)}</td>`;
   return `${previewHtml()}
-  <div class="admin-section"><h3>LeafFilter · installed price per foot</h3><p>${escapeHtml(aGet('pricing.source') || 'Corporate price sheet')}. Leave a cell blank for a size not sold on that floor.</p>
-    <table class="admin-table"><thead><tr><th>Floor</th><th>5" LeafFilter</th><th>6" LeafFilter</th><th>Versa Max</th></tr></thead><tbody>
-    ${['1','2','3'].map(f=>`<tr><td><b>${f==='1'?'1st':f==='2'?'2nd':'3rd'} Floor</b></td>${cell('lf5_'+f)}${cell('lf6_'+f)}${cell('vm_'+f)}</tr>`).join('')}
+  <div class="admin-section"><h3>LeafFilter · installed price per foot</h3><p>${escapeHtml(aGet('pricing.source') || 'Corporate price sheet')}. Every LeafFilter foot is charged at the 6" price.</p>
+    <table class="admin-table"><thead><tr><th>Floor</th><th>LeafFilter (6" price)</th><th>Versa Max</th></tr></thead><tbody>
+    ${['1','2','3'].map(f=>`<tr><td><b>${f==='1'?'1st':f==='2'?'2nd':'3rd'} Floor</b></td>${cell('lf6_'+f)}${cell('vm_'+f)}</tr>`).join('')}
     </tbody></table></div>
-  <div class="admin-section"><h3>Gutters &amp; downspouts · installed price per foot</h3><p>Includes removal, seamless gutters, hidden hangers, downspouts, and disposal.</p>
-    <div class="admin-fields">${aField('5" seamless (2×3 downs)','pricing.retailPerFt.gutter5',{pre:'$',unit:'/ft'})}${aField('6" seamless (3×4 downs)','pricing.retailPerFt.gutter6',{pre:'$',unit:'/ft'})}</div></div>
+  <div class="admin-section"><h3>Gutters &amp; downspouts · installed price per foot</h3><p>Every gutter foot is charged at the 6" price. Includes removal, seamless gutters, hidden hangers, downspouts, and disposal.</p>
+    <div class="admin-fields">${aField('Gutters &amp; downspouts (6" price)','pricing.retailPerFt.gutter6',{pre:'$',unit:'/ft'})}</div></div>
   <div class="admin-section"><h3>Extras</h3><p>Reps enter a quantity in the unit shown. "× cost" items multiply the material cost the rep enters.</p>
     <table class="admin-table"><thead><tr><th>Item</th><th style="width:120px">Price</th><th style="width:130px">Unit</th><th style="width:70px"></th></tr></thead><tbody>
     ${extras.map((x,i)=>`<tr><td>${aText(`pricing.extras.${i}.name`)}</td><td>${aNum(`pricing.extras.${i}.price`)}</td><td><select data-apath="pricing.extras.${i}.unit" data-atype="text">${['ft','each','hour','sq ft','× cost'].map(u=>`<option ${ (x.type==='multiplier'?'× cost':x.unit)===u?'selected':''}>${u}</option>`).join('')}</select></td><td><button class="mini-btn danger" data-del-extra="${i}">Remove</button></td></tr>`).join('')}
