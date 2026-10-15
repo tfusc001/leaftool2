@@ -7,7 +7,7 @@
   <meta name="apple-mobile-web-app-title" content="LeafFilter Planner" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="theme-color" content="#0B2E4A" />
-  <title>LeafFilter Norfolk Home Protection Planner v63</title>
+  <title>LeafFilter Home Protection Planner v64</title>
   <style>
     :root{
       --navy:#082A24; --navy2:#0B3A32; --green:#5FBA42; --green2:#2F7D32;
@@ -1841,7 +1841,7 @@ body.admin-page .admin-card{height:94vh;max-height:94vh}
     <div class="topbar-inner">
       <div class="brand">
         <div class="logo-panel"><img id="brandLogo" alt="LeafFilter Gutter Protection" /></div>
-        <div class="brand-copy"><h1>LeafFilter Norfolk</h1><div class="sub">Home Protection Planner</div></div>
+        <div class="brand-copy"><h1>LeafFilter</h1><div class="sub">Home Protection Planner</div></div>
       </div>
       <div class="top-actions">
         <div class="field-app-status synced hide-in-presentation" id="connectionStatus" aria-live="polite"><span class="status-dot"></span><span><b>Checking</b><small>Preparing field app</small></span></div>
@@ -1862,12 +1862,12 @@ body.admin-page .admin-card{height:94vh;max-height:94vh}
       <aside class="setup panel pad">
         <div class="section-title"><div><div class="eyebrow">Rep Setup</div><h2>Customer + Option Builder</h2></div></div>
         <div class="row"><div class="field"><label>Customer Name</label><input id="customerName" placeholder="Homeowner"></div><div class="field"><label>Date</label><input id="apptDate" type="date"></div></div>
-        <div class="field"><label>Property Address</label><input id="address" placeholder="Norfolk / Hampton Roads"></div>
-        <div class="row"><div class="field"><label>State</label><select id="jobState"><option value="VA">Virginia</option><option value="NC">North Carolina</option></select></div><div class="field"><label>Sales Tax</label><div class="tax-pill" id="taxPill">No sales tax</div></div></div>
-        <div class="field hidden" id="zipField"><label>Property ZIP (sets NC county tax)</label><input id="zip" inputmode="numeric" maxlength="5" placeholder="ZIP code"></div>
+        <div class="field"><label>Property Address</label><input id="address" placeholder="Street, city"></div>
+        <div class="row"><div class="field"><label>State</label><select id="jobState"></select></div><div class="field"><label>Sales Tax</label><div class="tax-pill" id="taxPill">No sales tax</div></div></div>
+        <div class="field hidden" id="zipField"><label>Property ZIP (sets county tax)</label><input id="zip" inputmode="numeric" maxlength="5" placeholder="ZIP code"></div>
         <div id="repNotes" class="hide-in-presentation"></div>
         <div class="row"><div class="field"><label>Customer Phone</label><input id="customerPhone" type="tel" inputmode="tel" placeholder="Phone number"></div><div class="field"><label>Customer Email</label><input id="customerEmail" type="email" placeholder="Email address"></div></div>
-        <div class="row"><div class="field"><label>Representative</label><input id="repName" placeholder="Sales Consultant"></div><div class="field"><label>Branch</label><input id="branch" value="Norfolk"></div></div>
+        <div class="row"><div class="field"><label>Representative</label><input id="repName" placeholder="Sales Consultant"></div><div class="field"><label>Branch</label><input id="branch" placeholder="Your branch / city"></div></div>
         <div class="divider"></div>
         <div class="section-title"><h2>Option Builder</h2></div>
         <div class="tabs" id="editTabs"></div>
@@ -1890,7 +1890,7 @@ body.admin-page .admin-card{height:94vh;max-height:94vh}
           </div>
         </div>
         <div id="mainView"></div>
-        <div class="footer-brand">LeafFilter Norfolk · Protecting Homes Across Hampton Roads · Presented by your local LeafFilter team</div>
+        <div class="footer-brand">LeafFilter · Protecting homes with the nation's #1 gutter guard · Presented by your local LeafFilter team</div>
       </section>
     </div>
   </main>
@@ -1991,14 +1991,14 @@ const brandAssets = {
 };
 const defaultOptions = () => ({
   A:{key:'A', name:'Essential Protection', label:'Option A', badge:'Entry Protection', retail:0, senior:false, military:false, couponType:'none', couponCustom:0, quickStartType:'10p', preferredPaymentSavings:false, flexibleInstall:false, planId:'GS-1509', products:['LeafFilter'], customProduct:'', notes:'Eliminates gutter cleaning and protects against clog-related overflow.'},
-  B:{key:'B', name:'Complete Protection', label:'Option B', badge:'Most Popular Norfolk Choice', retail:0, senior:false, military:false, couponType:'500', couponCustom:0, quickStartType:'10p', preferredPaymentSavings:false, flexibleInstall:false, planId:'GS-1509', products:['LeafFilter','5” Gutters','Downspouts'], customProduct:'', notes:'LeafFilter with a complete gutter and downspout system for stronger water management.'},
+  B:{key:'B', name:'Complete Protection', label:'Option B', badge:'Most Popular Choice', retail:0, senior:false, military:false, couponType:'500', couponCustom:0, quickStartType:'10p', preferredPaymentSavings:false, flexibleInstall:false, planId:'GS-1509', products:['LeafFilter','5” Gutters','Downspouts'], customProduct:'', notes:'LeafFilter with a complete gutter and downspout system for stronger water management.'},
   C:{key:'C', name:'Total Roofline Protection', label:'Option C', badge:'Best Value', retail:0, senior:false, military:false, couponType:'500', couponCustom:0, quickStartType:'10p', preferredPaymentSavings:false, flexibleInstall:false, planId:'GS-1509', products:['LeafFilter','6” Gutters','Downspouts','Trim Wrap','Soffit','Fascia'], customProduct:'', notes:'Complete roofline protection package for maximum protection, drainage performance, and curb appeal.'}
 });
 const REP_INFO_KEY = 'lf-norfolk-planner-rep-info';
 const WORKING_STATE_KEY = 'lf-norfolk-planner-working-state-v60';
 function savedRepInfo(){try{return JSON.parse(localStorage.getItem(REP_INFO_KEY)||'{}')||{};}catch(e){return {};}}
-function persistRepInfo(){try{localStorage.setItem(REP_INFO_KEY, JSON.stringify({repName:state.repName||'', branch:state.branch||'Norfolk'}));}catch(e){}}
-const defaultState = () => ({customerName:'', customerPhone:'', customerEmail:'', address:'', repName:savedRepInfo().repName||'', branch:savedRepInfo().branch||'Norfolk', apptDate:new Date().toISOString().slice(0,10), activeOption:'B', editOption:'B', selectedOption:'B', view:'investment', focusOption:'B', offerMode:'finance', presentation:false, revealStep:6, referral:{name:'',contact:''}, jobState:'VA', zip:'', selfGen:false, options:defaultOptions()});
+function persistRepInfo(){try{localStorage.setItem(REP_INFO_KEY, JSON.stringify({repName:state.repName||'', branch:state.branch||''}));}catch(e){}}
+const defaultState = () => ({customerName:'', customerPhone:'', customerEmail:'', address:'', repName:savedRepInfo().repName||'', branch:savedRepInfo().branch||'', apptDate:new Date().toISOString().slice(0,10), activeOption:'B', editOption:'B', selectedOption:'B', view:'investment', focusOption:'B', offerMode:'finance', presentation:false, revealStep:6, referral:{name:'',contact:''}, jobState:defaultJobState(), zip:'', selfGen:false, options:defaultOptions()});
 let state = defaultState();
 const $ = s => document.querySelector(s);
 const money = n => (isFinite(n)?n:0).toLocaleString('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0});
@@ -2183,9 +2183,9 @@ function renderHeaderInfo(){
   if(!row) return;
   row.innerHTML = `<div class="header-info-inner">
     <div class="header-info-item"><span>Customer</span><b>${escapeHtml(state.customerName||'Homeowner')}</b></div>
-    <div class="header-info-item"><span>Address / City</span><b>${escapeHtml(state.address||'Hampton Roads')}</b></div>
+    <div class="header-info-item"><span>Address / City</span><b>${escapeHtml(state.address||'Not entered')}</b></div>
     <div class="header-info-item"><span>Presented By</span><b>${escapeHtml(state.repName||'Sales Consultant')}</b></div>
-    <div class="header-info-item"><span>Branch</span><b>LeafFilter ${escapeHtml(state.branch||'Norfolk')}</b></div>
+    <div class="header-info-item"><span>Branch</span><b>${escapeHtml(('LeafFilter '+(state.branch||'')).trim())}</b></div>
   </div>`;
 }
 
@@ -2703,7 +2703,7 @@ function decisionSummaryView(k){
   </div>`;
 }
 function decisionCard(k){const opt=state.options[k], c=calcOption(opt), cls=k==='B'?'decision featured':k==='C'?'decision best':'decision'; return `<article class="${cls}" data-select="${k}"><div class="eyebrow">${escapeHtml(opt.label)}</div><h3>${escapeHtml(opt.name)}</h3><div class="${k==='C'?'badge gold':'badge'}">${escapeHtml(opt.badge)}</div><div class="product-list" style="margin-top:18px">${productListHtml(opt, true, 7)}</div><div class="monthly">${state.offerMode==='finance'?money(c.monthly)+'<span style="font-size:22px">/mo</span>':money(c.checkPrice)}</div><div class="prompt">This option works best for my home.</div><button class="choice-btn" data-select="${k}">Select ${escapeHtml(opt.label)}</button></article>`;}
-function selectedView(){const k=state.selectedOption||state.activeOption; const opt=state.options[k], c=calcOption(opt); return `<div class="selected-screen"><div class="selected-card"><div class="eyebrow">Your Selected Protection Plan</div><h2 class="selected-title">${escapeHtml(opt.name)}</h2><div class="${k==='C'?'badge gold':'badge'}">${escapeHtml(opt.badge)}</div><div class="product-list" style="margin-top:18px">${productListHtml(opt, true)}</div></div><div class="next-step"><h3>Next Step: Reserve Installation Window</h3><p style="margin:0 0 18px;color:rgba(255,255,255,.88)">This plan gives your home the selected level of LeafFilter Norfolk protection.</p><div class="price-focus" style="background:#fff;border:0"><div class="label">${paymentModeLabel()}</div><div class="big">${displayPaymentValueHtml(opt,c)}</div><div class="subline">${optionHasPrice(opt)?selectedPaymentSubline(c):'Enter Retail Price before printing or presenting final pricing.'}</div></div><button class="choice-btn" id="printSelected" style="background:#fff;color:var(--navy);margin-top:14px">Print Customer Summary</button><button class="choice-btn" data-next-view="referral" style="background:transparent;border:2px solid #fff;color:#fff;margin-top:10px">Continue to Referral Program</button></div></div>`;}
+function selectedView(){const k=state.selectedOption||state.activeOption; const opt=state.options[k], c=calcOption(opt); return `<div class="selected-screen"><div class="selected-card"><div class="eyebrow">Your Selected Protection Plan</div><h2 class="selected-title">${escapeHtml(opt.name)}</h2><div class="${k==='C'?'badge gold':'badge'}">${escapeHtml(opt.badge)}</div><div class="product-list" style="margin-top:18px">${productListHtml(opt, true)}</div></div><div class="next-step"><h3>Next Step: Reserve Installation Window</h3><p style="margin:0 0 18px;color:rgba(255,255,255,.88)">This plan gives your home the selected level of LeafFilter protection.</p><div class="price-focus" style="background:#fff;border:0"><div class="label">${paymentModeLabel()}</div><div class="big">${displayPaymentValueHtml(opt,c)}</div><div class="subline">${optionHasPrice(opt)?selectedPaymentSubline(c):'Enter Retail Price before printing or presenting final pricing.'}</div></div><button class="choice-btn" id="printSelected" style="background:#fff;color:var(--navy);margin-top:14px">Print Customer Summary</button><button class="choice-btn" data-next-view="referral" style="background:transparent;border:2px solid #fff;color:#fff;margin-top:10px">Continue to Referral Program</button></div></div>`;}
 const financingHighlights = {
   'WF-1019':{tag:'Most Popular · No Interest', pitch:'Pay it off within 12 months and owe $0 in interest.'},
   'GS-1509':{tag:'Lowest Monthly Payment', pitch:'Spread the investment over 15 years for the smallest possible monthly payment.'},
@@ -2731,7 +2731,7 @@ function financingOptionsView(){
     </div>`;
   }).join('');
   return `<div class="financing-wrap">
-    <div class="financing-head"><h2>Your Easy Pay Options</h2><p>Here are the most popular ways Norfolk homeowners pay for ${escapeHtml(opt.name)}.</p></div>
+    <div class="financing-head"><h2>Your Easy Pay Options</h2><p>Here are the most popular ways homeowners pay for ${escapeHtml(opt.name)}.</p></div>
     <div class="financing-price-today"><span>${escapeHtml(todayPriceLabel())}</span><strong>${money(todayPrice)}</strong></div>
     <div class="financing-grid">${cards}</div>
     <div class="disclaimer">Estimated Monthly Payment - financing subject to credit approval. Final terms, rates, and payments are provided by the lender.</div>
@@ -2741,10 +2741,10 @@ function financingOptionsView(){
 function referralView(){
   const name = escapeHtml(String(state.customerName||'Homeowner').trim() || 'Homeowner');
   return `<div class="referral-wrap">
-    <div class="referral-head"><h2>Know Someone Who Needs LeafFilter?</h2><p>Thank you, ${name}! Refer a friend or neighbor in Hampton Roads and you both benefit.</p></div>
+    <div class="referral-head"><h2>Know Someone Who Needs LeafFilter?</h2><p>Thank you, ${name}! Refer a friend or neighbor and you both benefit.</p></div>
     <div class="referral-grid">
       <div class="referral-card"><div class="referral-kicker">For You</div><div class="referral-amount">$250</div><p>Reward credit for every referral that completes an installation.</p></div>
-      <div class="referral-card highlight"><div class="referral-kicker">For Them</div><div class="referral-amount">Free Estimate</div><p>Your friend gets a free, no-pressure inspection and quote from LeafFilter Norfolk.</p></div>
+      <div class="referral-card highlight"><div class="referral-kicker">For Them</div><div class="referral-amount">Free Estimate</div><p>Your friend gets a free, no-pressure inspection and quote from LeafFilter.</p></div>
     </div>
     <div class="field"><label>Referral Name</label><input id="referralName" placeholder="Friend or neighbor's name"></div>
     <div class="field"><label>Referral Phone or Email</label><input id="referralContact" placeholder="Phone number or email"></div>
@@ -2833,7 +2833,7 @@ function renderPrintSheet(){
   $('#printSheet').innerHTML=`<div class="proposal-page elite-proposal-v44">
     <div class="elite-header">
       <div>
-        <div class="proposal-brand">LeafFilter Norfolk</div>
+        <div class="proposal-brand">${escapeHtml(('LeafFilter '+(state.branch||'')).trim())}</div>
         <h1>Home Protection Proposal</h1>
         <p>Selected plan, included scope, warranty protection, and today’s investment.</p>
       </div>
@@ -2851,8 +2851,8 @@ function renderPrintSheet(){
     </div>
 
     <div class="proposal-info-grid compact-info">
-      <div class="proposal-info"><span>Prepared For</span><b>${escapeHtml(state.customerName||'Homeowner')}</b><small>${escapeHtml(state.address||'Hampton Roads')}</small></div>
-      <div class="proposal-info"><span>Presented By</span><b>${escapeHtml(state.repName||'Sales Consultant')}</b><small>LeafFilter ${escapeHtml(state.branch||'Norfolk')}</small></div>
+      <div class="proposal-info"><span>Prepared For</span><b>${escapeHtml(state.customerName||'Homeowner')}</b><small>${escapeHtml(state.address||'')}</small></div>
+      <div class="proposal-info"><span>Presented By</span><b>${escapeHtml(state.repName||'Sales Consultant')}</b><small>${escapeHtml(('LeafFilter '+(state.branch||'')).trim())}</small></div>
     </div>
 
     <div class="elite-plan-row">
@@ -3147,7 +3147,7 @@ function cleanStateForSave(){
 function dealDisplayName(deal){
   const s = deal.state || {};
   const customer = String(s.customerName || deal.customerName || 'Homeowner').trim();
-  const address = String(s.address || deal.address || 'Hampton Roads').trim();
+  const address = String(s.address || deal.address || '').trim();
   return `${customer} · ${address}`;
 }
 function paymentViewLabelFromMode(mode){
@@ -3172,9 +3172,9 @@ function buildDealRecord(snapshot, id, now){
     customerName: snapshot.customerName || 'Homeowner',
     customerPhone: snapshot.customerPhone || '',
     customerEmail: snapshot.customerEmail || '',
-    address: snapshot.address || 'Hampton Roads',
+    address: snapshot.address || '',
     repName: snapshot.repName || 'Sales Consultant',
-    branch: snapshot.branch || 'Norfolk',
+    branch: snapshot.branch || '',
     apptDate: snapshot.apptDate || '',
     selectedOption: selected,
     optionName: selectedOpt ? selectedOpt.name : '',
@@ -3420,7 +3420,7 @@ window.addEventListener('keydown',e=>{if(e.key==='Escape'&&state.presentation){s
 /* =====================================================================
  * v63 PRICE BOOK MERGE
  * Prices, cost/Par rules, discounts, commission rules, the rate card, and
- * NC sales tax come from the "App Price Book" tab in Google Sheets. Nothing
+ * sales tax come from the "App Price Book" tab in Google Sheets. Nothing
  * internal is written into this public file: the app downloads the price
  * book when online and keeps a copy on the device for offline use.
  * ===================================================================== */
@@ -3432,6 +3432,7 @@ const BASE_FINANCE_PLANS = financePlans.slice();
 let priceBook = null;
 try { priceBook = JSON.parse(localStorage.getItem(PRICEBOOK_KEY) || 'null'); } catch (e) { priceBook = null; }
 
+function defaultJobState(){ try { return (priceBook && priceBook.region && priceBook.region.defaultState) || 'VA'; } catch (e) { return 'VA'; } }
 function pathGet(obj, path){ return String(path).split('.').reduce((o,k)=>o==null?undefined:o[k], obj); }
 function pb(path, fallback){ const v = pathGet(priceBook, path); return (v===undefined || v===null || v==='') ? fallback : v; }
 function pbPct(key, fallback){ return (Number(pb('discounts.'+key, fallback)) || 0) / 100; }
@@ -3740,39 +3741,48 @@ function finalOfferControlHtml(k){
   return `<div class="final-offer-row"><button type="button" class="final-offer-btn ${opt.finalOffer?'on':''}" data-final-offer="${k}">${opt.finalOffer ? 'Final Offer Applied' : 'Final Offer'}</button></div>`;
 }
 
-/* ---------------------------------------------------------------- NC sales tax */
+/* ---------------------------------------------------------------- Sales tax (one state's county table) */
+const US_STATES = [['AL','Alabama'],['AK','Alaska'],['AZ','Arizona'],['AR','Arkansas'],['CA','California'],['CO','Colorado'],['CT','Connecticut'],['DE','Delaware'],['FL','Florida'],['GA','Georgia'],['HI','Hawaii'],['ID','Idaho'],['IL','Illinois'],['IN','Indiana'],['IA','Iowa'],['KS','Kansas'],['KY','Kentucky'],['LA','Louisiana'],['ME','Maine'],['MD','Maryland'],['MA','Massachusetts'],['MI','Michigan'],['MN','Minnesota'],['MS','Mississippi'],['MO','Missouri'],['MT','Montana'],['NE','Nebraska'],['NV','Nevada'],['NH','New Hampshire'],['NJ','New Jersey'],['NM','New Mexico'],['NY','New York'],['NC','North Carolina'],['ND','North Dakota'],['OH','Ohio'],['OK','Oklahoma'],['OR','Oregon'],['PA','Pennsylvania'],['RI','Rhode Island'],['SC','South Carolina'],['SD','South Dakota'],['TN','Tennessee'],['TX','Texas'],['UT','Utah'],['VT','Vermont'],['VA','Virginia'],['WA','Washington'],['WV','West Virginia'],['WI','Wisconsin'],['WY','Wyoming']];
+function stateName(code){ const s = US_STATES.find(x=>x[0]===code); return s ? s[1] : code; }
+function stateOptionsHtml(selected){ return US_STATES.map(([c,n])=>`<option value="${c}" ${c===selected?'selected':''}>${n}</option>`).join(''); }
+function taxTableState(){ return pb('tax.state', 'NC'); }
+function populateStateSelect(){ const el = $('#jobState'); if (el && !el.options.length) el.innerHTML = stateOptionsHtml(state.jobState || defaultJobState()); }
+
 function taxInfo(){
-  // Sales tax applies only to North Carolina jobs. Virginia (the default) has none.
-  if ((state.jobState || 'VA') !== 'NC') return {state: 'VA', known: false, nc: false};
+  // Sales tax applies only in the state that has a county tax table in the price book.
+  const st = state.jobState || defaultJobState();
+  const taxState = taxTableState();
+  if (st !== taxState) return {state: st, known: false, inTable: false};
   const z = String(state.zip || '').trim().slice(0, 5);
-  if (!/^\d{5}$/.test(z)) return {state: 'NC', known: false, nc: true, noZip: true};
+  if (!/^\d{5}$/.test(z)) return {state: st, known: false, inTable: true, noZip: true};
   const county = pb('tax.zips', {})[z];
-  if (!county) return {state: 'NC', zip: z, known: false, nc: true};
-  return {state: 'NC', zip: z, known: true, nc: true, county, rate: Number(pb('tax.counties', {})[county] || 0)};
+  if (!county) return {state: st, zip: z, known: false, inTable: true};
+  return {state: st, zip: z, known: true, inTable: true, county, rate: Number(pb('tax.counties', {})[county] || 0)};
 }
 function taxAmount(price){ const t = taxInfo(); return t && t.known ? Math.round(price * t.rate / 100) : 0; }
 function renderTaxPill(){
+  populateStateSelect();
   const el = $('#taxPill'); if (!el) return;
   const t = taxInfo();
-  const zf = $('#zipField'); if (zf) zf.classList.toggle('hidden', !t.nc);
+  const zf = $('#zipField'); if (zf) zf.classList.toggle('hidden', !t.inTable);
   el.className = 'tax-pill';
-  if (!t.nc) { el.innerHTML = 'No sales tax<small>Virginia job</small>'; return; }
-  if (t.known) { el.classList.add('ok'); el.innerHTML = `${t.rate}% NC sales tax<small>${escapeHtml(t.county)} County</small>`; return; }
+  if (!t.inTable) { el.innerHTML = `No sales tax<small>${escapeHtml(stateName(t.state))} job</small>`; return; }
+  if (t.known) { el.classList.add('ok'); el.innerHTML = `${t.rate}% ${t.state} sales tax<small>${escapeHtml(t.county)} County</small>`; return; }
   el.classList.add('warn');
-  el.innerHTML = t.noZip ? 'Enter the ZIP<small>Sets the NC county rate</small>' : 'ZIP not in NC territory list<small>Tax not set · ask admin to add it</small>';
+  el.innerHTML = t.noZip ? 'Enter the ZIP<small>Sets the county rate</small>' : 'ZIP not in territory list<small>Tax not set · ask admin to add it</small>';
 }
 function taxRowsHtml(price){
   const t = taxInfo(); if (!t || !t.known || !(price > 0)) return '';
   const tax = taxAmount(price);
-  return `<div class="calc-row"><span>Est. NC Sales Tax (${t.rate}%)</span><strong>${money(tax)}</strong></div><div class="calc-row"><strong>Total with Tax</strong><strong>${money(price + tax)}</strong></div>`;
+  return `<div class="calc-row"><span>Est. ${t.state} Sales Tax (${t.rate}%)</span><strong>${money(tax)}</strong></div><div class="calc-row"><strong>Total with Tax</strong><strong>${money(price + tax)}</strong></div>`;
 }
 function taxSublineHtml(price){
   const t = taxInfo(); if (!t || !t.known || !(price > 0)) return '';
-  return `<div class="final-price-tax">Plus est. NC sales tax ${money(taxAmount(price))} · ${escapeHtml(t.county)} County ${t.rate}%</div>`;
+  return `<div class="final-price-tax">Plus est. ${t.state} sales tax ${money(taxAmount(price))} · ${escapeHtml(t.county)} County ${t.rate}%</div>`;
 }
 function proposalTaxLineHtml(price){
   const t = taxInfo(); if (!t || !t.known || !(price > 0)) return '';
-  return `<div class="proposal-line"><span>Est. NC Sales Tax (${t.rate}%, ${escapeHtml(t.county)} County)</span><b>${money(taxAmount(price))}</b></div>`;
+  return `<div class="proposal-line"><span>Est. ${t.state} Sales Tax (${t.rate}%, ${escapeHtml(t.county)} County)</span><b>${money(taxAmount(price))}</b></div>`;
 }
 const __renderHeaderInfo = renderHeaderInfo;
 renderHeaderInfo = function(){ __renderHeaderInfo(); renderTaxPill(); renderRepNotes(); };
@@ -3800,7 +3810,7 @@ function adminDirty(){ return !!(admin.draft && JSON.stringify(stripMeta(admin.d
 function sectionDirty(key){ return !!(admin.draft && JSON.stringify((admin.draft||{})[key]) !== JSON.stringify((admin.live||{})[key])); }
 function aGet(path){ return pathGet(admin.draft, path); }
 function aLive(path){ return pathGet(admin.live, path); }
-function aSet(path, val){ const ks = path.split('.'); let o = admin.draft; for (let i = 0; i < ks.length - 1; i++) o = o[ks[i]]; o[ks[ks.length - 1]] = val; }
+function aSet(path, val){ const ks = path.split('.'); let o = admin.draft; for (let i = 0; i < ks.length - 1; i++) { if (o[ks[i]] == null) o[ks[i]] = {}; o = o[ks[i]]; } o[ks[ks.length - 1]] = val; }
 function aChanged(path){ return !!admin.live && String(aGet(path)) !== String(aLive(path)); }
 
 function isAdminRoute(){ return /^#admin\b/.test(window.location.hash || ''); }
@@ -3968,7 +3978,12 @@ function adminTaxView(){
   const byCounty = {};
   Object.keys(zips).sort().forEach(z=>{ (byCounty[zips[z]] = byCounty[zips[z]] || []).push(z); });
   const names = Object.keys(counties).sort();
-  return `<div class="admin-section"><h3>NC sales tax by county</h3><p>Source: ${escapeHtml(aGet('tax.source') || 'NC Department of Revenue')}. Reps can't change the rate; it's set by the customer's ZIP.</p>
+  return `<div class="admin-section"><h3>States</h3><p>Reps pick the job's state. Sales tax is added only for the state with a county tax table below; every other state shows no sales tax.</p>
+    <div class="admin-fields">
+      <div class="field"><label>Default state for new deals</label><select data-apath="region.defaultState" data-atype="text">${stateOptionsHtml(aGet('region.defaultState') || 'VA')}</select></div>
+      <div class="field"><label>State with a county tax table</label><select data-apath="tax.state" data-atype="text">${stateOptionsHtml(aGet('tax.state') || 'NC')}</select></div>
+    </div></div>
+  <div class="admin-section"><h3>${escapeHtml(stateName(aGet('tax.state') || 'NC'))} sales tax by county</h3><p>Source: ${escapeHtml(aGet('tax.source') || 'State Department of Revenue')}. Reps can't change the rate; it's set by the customer's ZIP.</p>
     <table class="admin-table"><thead><tr><th>County</th><th style="width:140px">Rate</th><th>ZIP codes</th></tr></thead><tbody>
     ${names.map(n=>`<tr><td><b>${escapeHtml(n)}</b></td><td>${aNum('tax.counties.'+n,{step:'0.01'})}</td><td><details><summary style="cursor:pointer;font-weight:900">${(byCounty[n]||[]).length} ZIPs</summary><div class="zip-chips">${(byCounty[n]||[]).map(z=>`<span class="zip-chip">${z}<button data-del-zip="${z}" aria-label="Remove ${z}">×</button></span>`).join('')}</div></details></td></tr>`).join('')}
     </tbody></table></div>
