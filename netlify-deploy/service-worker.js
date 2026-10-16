@@ -1,4 +1,4 @@
-const CACHE_NAME = 'lf-norfolk-planner-field-v70';
+const CACHE_NAME = 'lf-norfolk-planner-field-v71';
 const CORE_ASSETS = [
   './',
   './index.html',
