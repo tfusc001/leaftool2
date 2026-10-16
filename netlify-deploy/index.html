@@ -7,7 +7,7 @@
   <meta name="apple-mobile-web-app-title" content="LeafFilter Planner" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="theme-color" content="#0B2E4A" />
-  <title>LeafFilter Home Protection Planner v69</title>
+  <title>LeafFilter Home Protection Planner v70</title>
   <style>
     :root{
       --navy:#082A24; --navy2:#0B3A32; --green:#5FBA42; --green2:#2F7D32;
@@ -1770,6 +1770,7 @@
 .price-levels th:first-child{text-align:left;font-weight:900}
 .price-levels thead th{font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 .price-levels small{display:block;padding:8px 12px 10px;color:var(--muted);font-weight:800;font-size:11px}
+.rep-notes-bottom{margin-top:14px}
 .rep-notes{margin:6px 0 4px;border:1px solid #E7D59B;border-radius:16px;background:#FFFDF5;overflow:hidden}
 .rep-notes summary{cursor:pointer;list-style:none;padding:10px 12px;font-weight:950;color:var(--navy);display:flex;align-items:center;gap:8px}
 .rep-notes summary::-webkit-details-marker{display:none}
@@ -1899,7 +1900,6 @@ body.admin-page .admin-card{height:94vh;max-height:94vh}
         <div class="field"><label>Property Address</label><input id="address" placeholder="Street, city"></div>
         <div class="row"><div class="field"><label>State</label><select id="jobState"></select></div><div class="field"><label>Sales Tax</label><div class="tax-pill" id="taxPill">No sales tax</div></div></div>
         <div class="field hidden" id="zipField"><label>Property ZIP (sets county tax)</label><input id="zip" inputmode="numeric" maxlength="5" placeholder="ZIP code"></div>
-        <div id="repNotes" class="hide-in-presentation"></div>
         <div class="row"><div class="field"><label>Customer Phone</label><input id="customerPhone" type="tel" inputmode="tel" placeholder="Phone number"></div><div class="field"><label>Customer Email</label><input id="customerEmail" type="email" placeholder="Email address"></div></div>
         <div class="row"><div class="field"><label>Representative</label><input id="repName" placeholder="Sales Consultant"></div><div class="field"><label>Branch</label><input id="branch" placeholder="Your branch / city"></div></div>
         <div class="divider"></div>
@@ -1907,6 +1907,7 @@ body.admin-page .admin-card{height:94vh;max-height:94vh}
         <div class="tabs" id="editTabs"></div>
         <div id="optionEditor"></div>
         <div class="internal-note"><b>Customer-safe rule:</b> Presentation Mode hides plan numbers, divide factors, internal math, and rep controls. Customers see clean protection options, estimated payments, and price summaries only. Offline-first: Store Deal saves locally even with no signal and syncs pending cloud backups when online.</div>
+        <div id="repNotes" class="hide-in-presentation rep-notes-bottom"></div>
       </aside>
       <section class="stage" id="presentationStage">
         <div id="heroBlock"></div>
