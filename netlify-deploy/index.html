@@ -7,7 +7,7 @@
   <meta name="apple-mobile-web-app-title" content="LeafFilter Planner" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="theme-color" content="#0B2E4A" />
-  <title>LeafFilter Home Protection Planner v68</title>
+  <title>LeafFilter Home Protection Planner v69</title>
   <style>
     :root{
       --navy:#082A24; --navy2:#0B3A32; --green:#5FBA42; --green2:#2F7D32;
@@ -2130,7 +2130,9 @@ function calcOption(opt){
   let plan = getPlan(opt.planId);
   { const e = easyPayConfig(); if (plan.id===e.promoHigh || plan.id===e.promoLow) { const want = easyPayPromoFor(checkPrice); if (plan.id!==want && financePlans.some(p=>p.id===want)) { plan = getPlan(want); opt.planId = want; } } }
   const financedPrice = checkPrice;
-  const financedWithFees = plan.divide ? financedPrice / plan.divide : financedPrice;
+  // Customer payment is figured on Your Price Today. The lender fee (divide factor) is not passed to the
+  // customer; it only lowers the rep's commission price (see payFactor / commissionFor).
+  const financedWithFees = financedPrice;
   let monthly = 0;
   if(plan.payType==='term') monthly = financedWithFees / plan.term;
   else monthly = financedWithFees * (plan.rate || 0);
@@ -2276,7 +2278,7 @@ function refreshEditorCalculations(immediate=true){
   const help = $('#planHelp');
   if(help){
     const c = calcOption(opt);
-    help.textContent = `${c.plan.detail} Divide factor: ${Number(c.plan.divide).toFixed(4)} · Easy Pay uses internal finance base ${money(c.checkPrice)} divided by the factor.`;
+    help.textContent = planHelpText(c);
   }
   if(immediate) renderMainView(); else scheduleMainView();
   schedulePrintSheet();
@@ -2312,7 +2314,7 @@ function renderOptionEditor(){
     <label class="check flexible-install-control"><input type="checkbox" id="preferredPaymentSavings" ${opt.preferredPaymentSavings?'checked':''}> Preferred Payment Savings (${pb('discounts.preferredPaymentPct',3)}%)</label>
     <label class="check flexible-install-control"><input type="checkbox" id="flexibleInstall" ${opt.flexibleInstall?'checked':''}> Flexible Installation Discount</label>
     <div class="help rep-only">Use only when the homeowner can allow installation scheduling flexibility around timing, production availability, or route optimization. Customer must be able to accept installation on any available installation day within the next 10 days to qualify.</div>
-    <div class="field"><label>Financing Plan</label><select id="planId">${planOptions(opt.planId)}</select><div class="help rep-only" id="planHelp">${escapeHtml(c.plan.detail)} Divide factor: ${Number(c.plan.divide).toFixed(4)} · Easy Pay uses internal finance base ${money(c.checkPrice)} divided by the factor.</div></div>
+    <div class="field"><label>Financing Plan</label><select id="planId">${planOptions(opt.planId)}</select><div class="help rep-only" id="planHelp">${escapeHtml(planHelpText(c))}</div></div>
     <div id="priceBuildSummary">${editorPriceBuildHtml(opt)}</div>
     <div id="repNumbers" class="rep-numbers">${repNumbersHtml(opt)}</div>`;
   $('#optName').oninput=e=>updateEditorState(()=>{opt.name=e.target.value}, false);
@@ -2339,7 +2341,7 @@ function renderOptionEditor(){
   $('#lowestPlan').onclick=()=>{opt.planId=findLowestPlan(opt).id; render();};
 }
 function findLowestPlan(opt){return financePlans.filter(p=>p.common).map(p=>({p, m:monthlyForPlan(calcOption({...opt, planId:p.id}).checkPrice,p)})).sort((a,b)=>a.m-b.m)[0].p;}
-function monthlyForPlan(price, plan){const base=plan.divide?price/plan.divide:price; let m=plan.payType==='term'?base/plan.term:base*(plan.rate||0); if(plan.min)m=Math.max(m,plan.min); return Math.ceil(m||0);}
+function monthlyForPlan(price, plan){const base=price; let m=plan.payType==='term'?base/plan.term:base*(plan.rate||0); if(plan.min)m=Math.max(m,plan.min); return Math.ceil(m||0);}
 function renderShellControls(){
   state.offerMode = currentOfferMode();
   if(state.view==='savings' || state.view==='compare') state.view='investment';
@@ -3844,6 +3846,15 @@ function refreshDerivedProducts(opt){
 
 /* ---------------------------------------------------------------- Rep-only numbers */
 function paymentMethods(){ return pb('rateCard.methods', [{id:'check', label:'Check / Cash', factor:1}]); }
+
+// Rep-only line under the Financing Plan picker.
+function planHelpText(c){
+  const d = Number(c.plan && c.plan.divide) || 1;
+  const base = `${c.plan.detail || ''} Customer payment is figured on Your Price Today (${money(c.checkPrice)}), no finance fee added.`.trim();
+  if (d >= 1) return base + ' No lender fee on this plan.';
+  const fee = ((1 - d) * 100).toFixed(2).replace(/0+$/, '').replace(/\.$/, '');
+  return base + ` The ${fee}% lender fee (÷${d.toFixed(4)}) comes out of the commission price, not the customer's payment.`;
+}
 
 function payFactor(opt, c){
   const m = opt.payMethod || 'finance';
